@@ -3,6 +3,9 @@
 ( Copyright [c] 2009, Charles Childers                      )
 ( License: ISC                                              )
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
+( Descr: This adds [IF] and [THEN] for conditional execution)
+( Descr: of words at the listener level. Don't nest them!   )
+( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 {{
   : .noop drop ;
 

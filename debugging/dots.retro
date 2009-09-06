@@ -3,6 +3,8 @@
 ( Copyright [c] 2009, Charles Childers                      )
 ( License: ISC                                              )
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
+( Descr: This adds the .s word to Retro.                    )
+( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 {{
   variable #items
   variable TORS
