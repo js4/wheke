@@ -6,3 +6,27 @@ Please see the individual files for copyright information and
 license terms. (full license text can be found in the
 'licenses' directory).
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+To use:
+
+  1) Make sure the 'retro' binary is in your path
+  2) Put a copy of the retroImage in the top-level directory
+  3) Run ./libtool.sh to get a list of options
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Examples:
+
+To enable support for prefixes, you will need to load the 'find'
+and 'prefix' modules. The following will do this:
+
+  ./libtool.sh --add contrib/find.retro contrib/prefix.retro
+
+Your retroImage will now contain the find word and support for
+prefixes. Specify the files in the order you wish to load them
+in.
+
+To learn about a module, use --info:
+
+  ./libtool.sh --info contrib/find.retro
+
+This will generally provide copyright, license, and some
+descriptive text about the module.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
