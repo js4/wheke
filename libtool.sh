@@ -4,16 +4,6 @@
 #! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 if [ $1 ]
 then
-  if [ $1 == "--new" ]
-  then
-    rm -f retroImage
-    cd standard
-    cat extend.retro retrospect.retro quotes.retro editor.retro >../bootstrap.retro
-    cd ..
-    echo "save bye" >>bootstrap.retro
-    ../retro --with bootstrap.retro
-    rm -f bootstrap.retro
-  fi
   if [ $1 == "--add" ]
   then
     for var in $9 $8 $7 $6 $5 $4 $3 $2
@@ -21,24 +11,34 @@ then
       cat $var >>bootstrap.retro
     done
     echo "save bye" >>bootstrap.retro
-    ../retro --with bootstrap.retro
+    retro --with bootstrap.retro
     rm -f bootstrap.retro
   fi
   if [ $1 == "--clean" ]
   then
-    rm -f retroImage bootstrap.retro
+    rm -f bootstrap.retro
+  fi
+  if [ $1 == "--info" ]
+  then
+    for var in $9 $8 $7 $6 $5 $4 $3 $2
+    do
+      echo $var
+      grep License $var | sed 's/^(//' | sed 's/)//'
+      grep Copyright $var | sed 's/^(//' | sed 's/)//'
+      grep Descr $var | sed 's/^(//' | sed 's/)//'
+    done
   fi
 else
   echo "-------------------------------------------------------------"
-  echo "extend.sh - tool for adding extensions to a Retro image"
+  echo "libtool.sh - tool for adding extensions to a Retro image"
   echo " "
-  echo "./extend.sh --new"
-  echo "Create a new retroImage with the core extensions loaded."
-  echo " "
-  echo "./extend.sh --add file1 file2 ... file8"
+  echo "./libtool.sh --add file1 file2 ... file8"
   echo "Load files into a Retro image. Can accept up to 8 filenames."
   echo " "
-  echo "./extend.sh --clean"
-  echo "Remove retroImage and any temporary files created"
+  echo "./libtool.sh --clean"
+  echo "Remove any temporary files created"
+  echo " "
+  echo "./libtool --info file1 file2 ... file8"
+  echo "See a summary of extensions, including copyright and license"
   echo "-------------------------------------------------------------"
 fi

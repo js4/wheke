@@ -5,9 +5,9 @@
 ( Copyright [c] 2009, Charles Childers                        )
 ( License: ISC                                                )
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
-( This code provides a more error-tolerant Retro system. It   )
-( can detect some stack problems and recover the system to a  )
-( clean state in most cases.                                  )
+( Descr: This code provides a more error-tolerant Retro       )
+( Descr: system. It can dect some stack problems and recover  )
+( Descr: the system to a clean state in most cases.           )
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 {{
   variable latest
