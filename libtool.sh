@@ -6,7 +6,7 @@ if [ $1 ]
 then
   if [ $1 == "--add" ]
   then
-    for var in $9 $8 $7 $6 $5 $4 $3 $2
+    for var in $2 $3 $4 $5 $6 $7 $8 $9
     do
       cat $var >>bootstrap.retro
     done
@@ -20,7 +20,7 @@ then
   fi
   if [ $1 == "--info" ]
   then
-    for var in $9 $8 $7 $6 $5 $4 $3 $2
+    for var in $2 $3 $4 $5 $6 $7 $8 $9
     do
       echo $var
       grep License $var | sed 's/^(//' | sed 's/)//'
