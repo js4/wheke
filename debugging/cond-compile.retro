@@ -1,0 +1,27 @@
+( [IF] / [THEN] - conditional compilation                   )
+( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
+( Copyright [c] 2009, Charles Childers                      )
+( License: ISC                                              )
+( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
+{{
+  : .noop drop ;
+
+  : off
+    ['] .noop ['] .word     :is
+    ['] .noop ['] .macro    :is
+    ['] .noop ['] .data     :is
+    ['] .noop ['] .compiler :is
+    ['] .noop ['] .inline   :is
+  ;
+
+  : on
+    ['] .word     :devector
+    ['] .macro    :devector
+    ['] .data     :devector
+    ['] .compiler :devector
+    ['] .class    :devector
+  ;
+---reveal---
+  : [IF] 0; drop off ; ' execute last @ d->class !
+  : [THEN] on ; ' execute last @ d->class !
+}}
