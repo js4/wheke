@@ -1,4 +1,3 @@
-( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 ( One of the more interesting features in Retro 9.x was the   )
 ( support for appending single character prefixes to words to )
 ( alter their behaviour.                                      )
@@ -16,6 +15,9 @@
 (                                                             )
 ( This code requires the 'find' word to be loaded prior to    )
 ( running.                                                    )
+( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
+( Copyright [c] 2009, Charles Childers                        )
+( License: ISC                                                )
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 
 

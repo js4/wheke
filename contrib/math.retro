@@ -1,6 +1,8 @@
-( - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - )
-( Expansions to the Math functionality of Retro.              )
-( - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - )
+( Expansions to the Math functionality of Retro.            )
+( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
+( Copyright [c] 2009, Charles Childers                      )
+( License: ISC                                              )
+( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 
 {{
   : sqrt-closer 2dup / over - 2 / ;

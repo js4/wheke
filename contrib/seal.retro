@@ -1,6 +1,9 @@
-( Allows sealing the dictionary after a specific word. Only   )
-( the specified word and words defined after it will remain   )
-( visible.                                                    )
-( - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - )
+( Allows sealing the dictionary after a specific word. Only )
+( the specified word and words defined after it will remain )
+( visible.                                                  )
+( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
+( Copyright [c] 2009, Charles Childers                      )
+( License: ISC                                              )
+( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 
 : seal ( "- ) ' drop 0 which @ ! ;

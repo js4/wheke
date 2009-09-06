@@ -1,4 +1,3 @@
-( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 ( Retro does not ship with a visible word for searching the   )
 ( dictionary for specific words. This adds one.               )
 (                                                             )
@@ -6,6 +5,9 @@
 ( for and returns an address and a flag. If true, the address )
 ( is the *dictionary header* of the word being looked for. If )
 ( false, just discard the address.                            )
+( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
+( Copyright [c] 2009, Charles Childers                        )
+( License: ISC                                                )
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 {{
   variable name

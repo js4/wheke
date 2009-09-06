@@ -1,5 +1,8 @@
-( A simple switch/case construct.                             )
-( - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - )
+( A simple switch/case construct.                           )
+( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
+( Copyright [c] 2009, Charles Childers                      )
+( License: ISC                                              )
+( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 
 create <case> 0 ,
 : switch <case> ! ;

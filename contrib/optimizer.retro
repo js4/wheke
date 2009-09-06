@@ -1,4 +1,3 @@
-( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 ( Compiler Optimizations for Retro 10                         )
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 ( This is an experimental set of extensions to the core Retro )
@@ -6,6 +5,9 @@
 ( goal of generating faster, tighter machine code. It should  )
 ( be noted that this isn't flawless, and may generate bad     )
 ( code. Use it at your own risk.                              )
+( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
+( Copyright [c] 2009, Charles Childers                        )
+( License: ISC                                                )
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 
 

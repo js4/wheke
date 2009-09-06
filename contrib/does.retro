@@ -1,3 +1,8 @@
+( Implementation of does> for Retro                         )
+( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
+( Copyright [c] 2009, Charles Childers                      )
+( License: ISC                                              )
+( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 {{
   : reclass last @ d->class ! ;
   : .does compiler @ -1 =if swap literal, compile pop drop ;; then drop ;

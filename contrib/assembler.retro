@@ -1,6 +1,9 @@
-( Assembler for Ngaro VM machine code.                        )
-( This is really crude at present. All opcodes end in a ,     )
-( - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - )
+( Assembler for Ngaro VM machine code.                      )
+( This is really crude at present. All opcodes end in a ,   )
+( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
+( Copyright [c] 2009, Charles Childers                      )
+( License: ISC                                              )
+( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 : nop, 0 , ;          : lit, 1 , ;
 : dup, 2 , ;          : drop, 3 , ;
 : swap, 4 , ;         : push, 5 , ;
