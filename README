@@ -14,18 +14,16 @@ To use:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Examples:
 
-To enable support for prefixes, you will need to load the 'find'
-and 'prefix' modules. The following will do this:
+To enable support for prefixes, do this:
 
-  ./libtool.sh --add contrib/find.retro contrib/prefix.retro
+  ./libtool.sh --add contrib/prefix.retro
 
-Your retroImage will now contain the find word and support for
-prefixes. Specify the files in the order you wish to load them
-in.
+Your retroImage will now contain support for prefixes. Specify
+the files in the order you wish to load them in.
 
 To learn about a module, use --info:
 
-  ./libtool.sh --info contrib/find.retro
+  ./libtool.sh --info contrib/prefix.retro
 
 This will generally provide copyright, license, and some
 descriptive text about the module.
