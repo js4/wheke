@@ -6,14 +6,16 @@
 ( Descr: NOT for curses-backed VM implementations.          )
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 
-: ESC$ ( $- ) 27 emit type ;
-: black    s" [30m" ESC$ ;   : onBlack    s" [40m" ESC$ ;
-: red      s" [31m" ESC$ ;   : onRed      s" [41m" ESC$ ;
-: green    s" [32m" ESC$ ;   : onGreen    s" [42m" ESC$ ;
-: yellow   s" [33m" ESC$ ;   : onYellow   s" [43m" ESC$ ;
-: blue     s" [34m" ESC$ ;   : onBlue     s" [44m" ESC$ ;
-: magenta  s" [35m" ESC$ ;   : onMagenta  s" [45m" ESC$ ;
-: cyan     s" [36m" ESC$ ;   : onCyan     s" [46m" ESC$ ;
-: white    s" [37m" ESC$ ;   : onWhite    s" [47m" ESC$ ;
-: normal s" [0m" ESC$ ;      : bold s" [1m" ESC$ ;
-
+{{
+  : ESC$ ( $- ) 27 emit type ;
+---reveal---
+  : black    s" [30m" ESC$ ;   : onBlack    s" [40m" ESC$ ;
+  : red      s" [31m" ESC$ ;   : onRed      s" [41m" ESC$ ;
+  : green    s" [32m" ESC$ ;   : onGreen    s" [42m" ESC$ ;
+  : yellow   s" [33m" ESC$ ;   : onYellow   s" [43m" ESC$ ;
+  : blue     s" [34m" ESC$ ;   : onBlue     s" [44m" ESC$ ;
+  : magenta  s" [35m" ESC$ ;   : onMagenta  s" [45m" ESC$ ;
+  : cyan     s" [36m" ESC$ ;   : onCyan     s" [46m" ESC$ ;
+  : white    s" [37m" ESC$ ;   : onWhite    s" [47m" ESC$ ;
+  : normal s" [0m" ESC$ ;      : bold s" [1m" ESC$ ;
+}}
