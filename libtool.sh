@@ -26,6 +26,7 @@ then
       grep License $var | sed 's/^(//' | sed 's/)//'
       grep Copyright $var | sed 's/^(//' | sed 's/)//'
       grep Descr $var | sed 's/^(//' | sed 's/)//'
+      grep Deps $var | sed 's/^(//' | sed 's/)//'
       grep GPL $var >/dev/null
       if [ "$?" -eq "0" ]; then
         echo "   WARNING: Use of this module may require you to license your code"
