@@ -4,6 +4,7 @@
 ( Copyright [c] 2008, Luke Parrish                            )
 ( Copyright [c] 2009, Charles Childers                        )
 ( License: ISC                                                )
+( Deps: internals/compiler_class                              )
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 ( Descr: This code provides a more error-tolerant Retro       )
 ( Descr: system. It can dect some stack problems and recover  )
