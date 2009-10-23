@@ -5,19 +5,4 @@
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 ( Descr: This adds the .s word to Retro.                    )
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
-{{
-  variable #items
-  variable TORS
-  : pre ( - ) #items ! ;
-  : get ( ...- )
-    pop TORS !
-    #items @ for pop swap push push next
-    TORS @ push ;
-  : display ( -... )
-    pop TORS !
-    #items @ for pop pop swap push dup . next
-    TORS @ push ;
-  : header ." < " depth . ." > " ;
----reveal---
-  : .s ( - ) header depth 0; pre get display ;
-}}
+: .s depth 0; drop push .s pop dup . ;
