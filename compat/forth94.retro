@@ -34,6 +34,9 @@ create hld 0 ,
 : .unsupported drop ." Word unsupported" cr ;
 : stub: create ['] .unsupported last @ d->class ! ;
 
+: .obs drop ." Word is obsolete and should not be used" cr ;
+: obs: create ['] .obs last @ d->class ! ;
+
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 ( 6.1 CORE                                                  )
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
@@ -91,7 +94,7 @@ create hld 0 ,
 ( 6.1.0670 ABORT     )        : ABORT  drop-stack 0 execute ;
 ( 6.1.0680 ABORT"    )        : ABORT" 0 literal, ['] !if execute ['] ." execute ['] ABORT compile ['] then execute ; IMMEDIATE
 ( 6.1.0690 ABS       )        : ABS dup 0 <if -1 * then ;
-( 6.1.0695 ACCEPT    )        ( --- )
+( 6.1.0695 ACCEPT    )
 {{
   variable buffer
   variable count
@@ -186,7 +189,7 @@ create hld 0 ,
 ( 6.1.2033 POSTPONE )         : POSTPONE ' dup literal, >entry ?immediate -1 =if ['] execute compile ;; then ['] compile compile ; IMMEDIATE
 ( 6.1.2050 QUIT     )         : QUIT 0 execute ;
 ( 6.1.2060 R>       )         : R> 6 , ; IMMEDIATE
-( 6.1.2070 R@       )         : R@ pop pop dup swap push swap push ;
+( 6.1.2070 R@       )         : R@ ` pop ` dup ` push ; IMMEDIATE
 ( 6.1.2120 RECURSE  )         : RECURSE 7 , last @ d->xt @ , ; IMMEDIATE
 ( 6.1.2140 REPEAT   )         : REPEAT ` again ; IMMEDIATE
 ( 6.1.2160 ROT      )         : ROT rot ;
@@ -231,7 +234,7 @@ create hld 0 ,
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 ( 6.2 CORE EXT                                              )
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
-( 6.2.0060 #TIB          )  stub: #TIB
+( 6.2.0060 #TIB          )  obs: #TIB
 ( 6.2.0200 .(            )  stub: .(
 ( 6.2.0210 .R            )  stub: .R
 ( 6.2.0260 0<>           )  : 0<> 0 !if TRUE ;then FALSE ;
@@ -246,11 +249,11 @@ create hld 0 ,
 ( 6.2.0855 C"            )  stub: C"
 ( 6.2.0873 CASE          )  stub: CASE
 ( 6.2.0945 COMPILE,      )  stub: COMPILE,
-( 6.2.0970 CONVERT       )  stub: CONVERT
+( 6.2.0970 CONVERT       )  obs: CONVERT
 ( 6.2.1342 ENDCASE       )  stub: ENDCASE
 ( 6.2.1343 ENDOF         )  stub: ENDOF
 ( 6.2.1350 ERASE         )  : ERASE 0 swap fill ;
-( 6.2.1390 EXPECT        )  stub: EXPECT
+( 6.2.1390 EXPECT        )  obs: EXPECT
 ( 6.2.1485 FALSE         )  ( Supported by Retro )
 ( 6.2.1660 HEX           )  stub: HEX
 ( 6.2.1850 MARKER        )  stub: MARKER
@@ -269,14 +272,14 @@ create hld 0 ,
                                  a @ for pop pop swap push swap next
                                ;
                             }}
-( 6.2.2040 QUERY         )  stub: QUERY
+( 6.2.2040 QUERY         )  obs: QUERY
 ( 6.2.2125 REFILL        )  : REFILL FALSE ;
 ( 6.2.2148 RESTORE-INPUT )  stub: RESTORE-INPUT
 ( 6.2.2150 ROLL          )  stub: ROLL
 ( 6.2.2182 SAVE-INPUT    )  stub: SAVE-INPUT
 ( 6.2.2218 SOURCE-ID     )  stub: SOURCE-ID
-( 6.2.2240 SPAN          )  stub: SPAN
-( 6.2.2290 TIB           )  stub: TIB
+( 6.2.2240 SPAN          )  obs: SPAN
+( 6.2.2290 TIB           )  obs: TIB
 ( 6.2.2295 TO            )  : TO ' compiler @ -1 =if literal, ` ! ;then ! ; IMMEDIATE
 ( 6.2.2298 TRUE          )  ( Supported by Retro )
 ( 6.2.2300 TUCK          )  : TUCK tuck ;
