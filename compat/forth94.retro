@@ -92,7 +92,25 @@ create hld 0 ,
 ( 6.1.0680 ABORT"    )        : ABORT" 0 literal, ['] !if execute ['] ." execute ['] ABORT compile ['] then execute ; IMMEDIATE
 ( 6.1.0690 ABS       )        : ABS dup 0 <if -1 * then ;
 ( 6.1.0695 ACCEPT    )        ( --- )
-                              stub: ACCEPT
+{{
+  variable buffer
+  variable count
+  variable max
+
+  : >buffer    ( c-   ) buffer @ count @ + ! count ++ ;
+  : break-char ( c-cc ) dup 10 ;
+  : max?       ( -f   ) max @ count @ <> ;
+  : (accept)   ( -    )
+    repeat
+      max? 0; drop
+      key dup emit break-char =if drop ;then >buffer
+    again ;
+  : nows       ( -    ) whitespace off later whitespace on ;
+  : setup      ( bn-  ) max ! buffer ! 0 count ! ;
+---reveal---
+  : ACCEPT     ( bn-n ) nows setup (accept) count @ ;
+}}
+
 ( 6.1.0705 ALIGN     )        : ALIGN ;
 ( 6.1.0706 ALIGNED   )        : ALIGNED ;
                               : heap ['] here 3 + @ ;
