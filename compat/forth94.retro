@@ -267,6 +267,6 @@ create hld 0 ,
 ( 6.2.2395 UNUSED        )  : UNUSED #mem @ here - ;
 ( 6.2.2405 VALUE         )  : .value compiler @ -1 =if literal, ` @ ;then @ ;
                             : VALUE create ['] .value last @ d->class ! 0 , ;
-( 6.2.2440 WITHIN        )  stub: WITHIN
+( 6.2.2440 WITHIN        )  : WITHIN push over < pop swap push < pop + -2 = ;
 ( 6.2.2530 [COMPILE]     )  stub: [COMPILE]
 ( 6.2.2535 \             )  : \ whitespace off 10 accept whitespace on ; IMMEDIATE
