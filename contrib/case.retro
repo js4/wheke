@@ -7,5 +7,5 @@
 create <case> 0 ,
 : switch <case> ! ;
 
-macro: case:  ` dup <case> literal, ` @ ` =if ` drop ;
-macro: break  ` ;; ` then ;
+: case:  ` dup <case> literal, ` @ ` =if ` drop ; compile-only
+: break  ` ;; ` then ; compile-only

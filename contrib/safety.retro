@@ -22,24 +22,24 @@
   : end <list> @ 0 !if inbalance then ;
 
 ---reveal---
-  compiler: [prior last @ latest ! last @ @ last ! ;
-  compiler: prior] latest @ last ! ;
+  : [prior last @ latest ! last @ @ last ! ; compile-only
+  : prior] latest @ last ! ; compile-only
 
   : . ( n- )   [prior depth 0 =if 0 then . prior] ;
   : , ( n- )   [prior depth 0 =if 0 then , prior] ;
   : / ( xy-z ) [prior dup 0 !if / ;; then drop 1 / prior] ;
 
-  compiler: repeat here >depth ;
-  compiler: again depth? 8 , , ;
+  : repeat here >depth ; compile-only
+  : again depth? 8 , , ; compile-only
 
-  compiler: for [prior ` for prior] >depth ;
-  compiler: next depth? [prior ` next prior] ;
+  : for [prior ` for prior] >depth ; compile-only
+  : next depth? [prior ` next prior] ; compile-only
 
-  compiler: =if [prior ` =if prior] >depth ;
-  compiler: !if [prior ` !if prior] >depth ;
-  compiler: <if [prior ` <if prior] >depth ;
-  compiler: >if [prior ` >if prior] >depth ;
-  compiler: then [prior ` then prior] depth? ;
+  : =if [prior ` =if prior] >depth ; compile-only
+  : !if [prior ` !if prior] >depth ; compile-only
+  : <if [prior ` <if prior] >depth ; compile-only
+  : >if [prior ` >if prior] >depth ; compile-only
+  : then [prior ` then prior] depth? ; compile-only
 
-  compiler: ; ` ;; ` [ end ;; [
+  : ; ` ;; ` [ end ;; [ compile-only
 }}

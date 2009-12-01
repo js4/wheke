@@ -24,7 +24,7 @@
 {{
   variable code
   variable class
-  macro: char: 32 accept tib @ .data ;
+  : char: 32 accept tib @ .data ; immediate
   : handle
     dup d->class @ class ! d->xt @
     char: @ code @ =if @ ;then
