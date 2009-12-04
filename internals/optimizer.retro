@@ -38,20 +38,3 @@ forget p:
   ' opt-;  is ;
   ' opt-;; is ;;
 }
-
-
-( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
-( Remap simple sequences to optimal forms:                    )
-(   1 + to 1+                                                 )
-(   1 - to 1-                                                 )
-( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
-{
-  : lit? here 1- 1- @ 1 ;
-  : opt-+ ( R: nn-n  C: - ) compiler @ -1 =if lit? =if here 1- @ 1 =if -2 heap +! 26 , ;; then then 16 , ;; then [ 16 , ] ;
-  : opt-- ( R: nn-n  C: - ) compiler @ -1 =if lit? =if here 1- @ 1 =if -2 heap +! 27 , ;; then then 17 , ;; then [ 17 , ] ;
-
-  ' opt-+ is +  ' .macro reclass +
-  ' opt-- is -  ' .macro reclass -
-}
-
-
