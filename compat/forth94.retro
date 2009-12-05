@@ -32,15 +32,15 @@ create holdaddr 66 array
 create hld 0 ,
 
 : .unsupported drop ." Word unsupported" cr ;
-: stub: create ['] .unsupported last @ d->class ! ;
+: stub: create ['] .unsupported reclass ;
 
 : .obs drop ." Word is obsolete and should not be used" cr ;
-: obs: create ['] .obs last @ d->class ! ;
+: obs: create ['] .obs reclass ;
 
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 ( 6.1 CORE                                                  )
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
-( 6.1.1710 IMMEDIATE )        : IMMEDIATE ['] .macro last @ d->class ! ;
+( 6.1.1710 IMMEDIATE )        : IMMEDIATE immediate ;
 
 ( 6.1.0010 !         )        ( Supported by RETRO )
 ( 6.1.0030 #         )        ( --- )
@@ -77,7 +77,7 @@ create hld 0 ,
 ( 6.1.0430 2SWAP     )        : 2SWAP rot push rot pop ;
                               variable latest
 ( 6.1.0450 :         )        here is : ] create last @ latest ! latest @ @ last ! ] ;
-( 6.1.0460 ;         )        here is ; ] latest @ last ! ['] ;; execute ['] [ execute ['] .word last @ d->class ! ;; [
+( 6.1.0460 ;         )        here is ; ] latest @ last ! ['] ;; execute ['] [ execute ['] .word reclass ;; [
 ( 6.1.0480 <         )        : < <if -1 ;; then 0 ;
 ( 6.1.0490 <#        )        : <# 0 hld ! ;
 ( 6.1.0530 =         )        : = =if -1 ;; then 0 ;
@@ -138,12 +138,11 @@ create hld 0 ,
 ( 6.1.1200 DEPTH     )        : DEPTH depth ;
 ( 6.1.1240 DO        )        ( --- )
                               stub: DO
-                              : reclass last @ d->class ! ;
-                              : .does compiler @ -1 =if swap literal, compile pop drop ;; then drop ;
-( 6.1.1250 DOES>     )        : DOES> 1 , here 0 , ['] reclass compile ['] ;; execute here swap ! here literal, ['] .does compile ; IMMEDIATE
+( 6.1.1250 DOES>     )        : DOES> ` does> ; IMMEDIATE
 ( 6.1.1260 DROP      )        : DROP drop ;
 ( 6.1.1290 DUP       )        : DUP dup ;
-( 6.1.1310 ELSE      )        : ELSE ['] then execute ['] DUP compile 0 literal, ['] =if execute ['] DROP compile ; IMMEDIATE
+                              variable (else)
+( 6.1.1310 ELSE      )        : ELSE (else) on ` then ` dup ` 0 ` =if ` drop ; IMMEDIATE
 ( 6.1.1320 EMIT      )        : EMIT emit ;
 ( 6.1.1345 ENVIRONMENT? )     : ENVIRONMENT? 2drop 0 ;
 ( 6.1.1360 EVALUATE  )        ( --- )
@@ -173,8 +172,8 @@ create hld 0 ,
                               stub: LOOP
 ( 6.1.1805 LSHIFT   )         : LSHIFT << ;
 ( 6.1.1810 M*       )         : M* * ;
-( 6.1.1870 MAX      )         : MAX 2dup >if drop ;; then nip ;
-( 6.1.1880 MIN      )         : MIN 2dup >if drop ;; then nip ;
+( 6.1.1870 MAX      )         : MAX 2dup >if drop ;then nip ;
+( 6.1.1880 MIN      )         : MIN 2dup >if drop ;then nip ;
 ( 6.1.1890 MOD      )         : MOD mod ;
                               create src 0 ,
                               create dst 0 ,
@@ -183,10 +182,10 @@ create hld 0 ,
 ( 6.1.1910 NEGATE   )         : NEGATE neg ;
 ( 6.1.1980 OR       )         : OR or ;
 ( 6.1.1990 OVER     )         : OVER over ;
-                              : (to-entry) last repeat @ 0; 2dup d->xt @ =if nip ;; then again ;
+                              : (to-entry) last repeat @ 0; 2dup d->xt @ =if nip ;then again ;
                               : >entry (to-entry) drop ;
-                              : ?immediate d->class @ dup ['] .macro =if -1 drop ;; then 1 =if -1 ;; then 0 ;
-( 6.1.2033 POSTPONE )         : POSTPONE ' dup literal, >entry ?immediate -1 =if ['] execute compile ;; then ['] compile compile ; IMMEDIATE
+                              : ?immediate d->class @ dup ['] .macro =if -1 drop ;then 1 =if -1 ;then 0 ;
+( 6.1.2033 POSTPONE )         : POSTPONE ' dup literal, >entry ?immediate -1 =if ['] execute compile ;then ['] compile compile ; IMMEDIATE
 ( 6.1.2050 QUIT     )         : QUIT 0 execute ;
 ( 6.1.2060 R>       )         : R> 6 , ; IMMEDIATE
 ( 6.1.2070 R@       )         : R@ ` pop ` dup ` push ; IMMEDIATE
@@ -206,7 +205,7 @@ create hld 0 ,
 ( 6.1.2230 SPACES   )         : SPACES repeat 0; SPACE 1- again ;
 ( 6.1.2250 STATE    )         : STATE compiler ;
 ( 6.1.2260 SWAP     )         : SWAP swap ;
-( 6.1.2270 THEN     )         : THEN ['] then execute ['] drop compile ; IMMEDIATE
+( 6.1.2270 THEN     )         : THEN (else) @ if ` 0 then ` then ` drop (else) off ; IMMEDIATE
 ( 6.1.2310 TYPE     )         : TYPE for dup @ . 1+ next drop ;
 ( 6.1.2320 U.       )         ( --- )
                               stub: U.
