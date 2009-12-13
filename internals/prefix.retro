@@ -27,6 +27,8 @@
   variable class
   : char: 32 accept tib @ .data ; immediate
   : handle
+    char: ' code @ =if tib 1+ @ ;then
+    char: " code @ =if tib 1+ keepString ;then
     dup d->class @ class ! d->xt @
     char: @ code @ =if @ ;then
     char: ! code @ =if ! ;then
