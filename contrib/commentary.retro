@@ -1,0 +1,9 @@
+( Commentary parsing )
+{{
+
+variable tmp
+: nf whitespace dup @ tmp ! off ;
+: rf tmp @ whitespace ! ;
+---reveal---
+: ::: nf 10 accept rf ;
+}}
