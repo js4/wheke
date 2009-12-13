@@ -1,9 +1,20 @@
 ( Commentary parsing )
-{{
 
-variable tmp
-: nf whitespace dup @ tmp ! off ;
-: rf tmp @ whitespace ! ;
+(  filter  takes a copy of the whitespace value, places it on  )
+( the stack, sets whitespace to false, then after the calling  )
+( word completes, saves the original value back to the         )
+( whitespace variable.                                         )
+
+(  :::  calls filter, which deactivates whitespace until the   )
+( word is finished, then parses for the return character. When )
+( it ends, the original value of whitespace is restored from   )
+( the stack. The text of the comment is in the tib buffer,     )
+( although it will not normally be used in this context.       )
+
+{{
+: filter ( - ) whitespace dup
+               @ swap off
+               later whitespace ! ;
 ---reveal---
-: ::: nf 10 accept rf ;
+: ::: ( "- ) filter 10 accept ;
 }}
