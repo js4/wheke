@@ -37,7 +37,7 @@
   : otherwise
     drop
     char: ' code @ =if tib 1+ @ ;then
-    char: " code @ =if tib 1+ tempString ;then
+    char: " code @ =if tib 1+ keepString ;then
     ." Not Found" cr
   ;
 ---reveal---
