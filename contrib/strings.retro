@@ -1,0 +1,15 @@
+( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
+( Safety Net for Retro                                        )
+( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
+( Copyright [c] 2009, Luke Parrish                            )
+( License: ISC                                                )
+( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
+
+: append ( $$-$ )
+  swap
+  here push
+  here over getLength dup allot copy
+  here over getLength dup allot copy
+  0 , pop ;
+
+: prepend ( $$-$ ) swap append ;
