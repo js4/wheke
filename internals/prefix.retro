@@ -32,10 +32,14 @@
     char: ! code @ =if ! ;then
     char: ` code @ =if execute ;then
     char: ~ code @ =if .data ;then
-    char: ' code @ =if tib 1+ @ ;then
     class @ with-class
   ;
+  : otherwise
+    drop
+    char: ' code @ =if tib 1+ @ ;then
+    ." Not Found" cr
+  ;
 ---reveal---
-  : prefix tib @ code ! tib 1+ find if handle ;then drop ." Not found!" cr ;
+  : prefix tib @ code ! tib 1+ find if handle ;then otherwise ;
 }}
 ' prefix is notfound
