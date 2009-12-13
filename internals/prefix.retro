@@ -27,21 +27,17 @@
   variable class
   : clear 0 code ! ;
   
-  variable start
-  : begin 0 start ! ; compile-only
-  : match start @ if
-      ` clear ` ;then
-    then start on 
-    ` char: ` code ` @ ` =if 
-  ; compile-only 
-  : end start off
-    ` clear ` ;then 
-  ; compile-only 
+  variable already
+  : begin already off ; compile-only
+  : end   ` clear ` ;then ; compile-only
+  : prep  ` char: ` code ` @ ` = ; compile-only
+  : match already @ if ` end then 
+    already on ` prep ` if ; compile-only
 
   : always
     begin
       match ' tib 1+ @ 	
-      match " tib 1+ keepString 
+      match " tib 1+ keepString
     end
   ;
   : if-word
