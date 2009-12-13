@@ -7,7 +7,9 @@
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 
 {{
-: zeros 10 depth - for 0 . next ;
+: toomany? dup 0 <if ." More than 10 items." cr drop 0 then ;
+: zeros 10 depth - toomany? 0;
+        for 0 . next ;
 : values depth 0; drop push values pop dup . ;
 ---reveal---
 : .s zeros values ;
