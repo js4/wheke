@@ -6,11 +6,24 @@ Please see the individual files for copyright information and
 license terms. (full license text can be found in the
 'licenses' directory).
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Requirements:
+
+  1) PHP [for build.php only]
+  2) BASH
+  3) Retro binary ('retro', put in this directory)
+  4) Image ('retroImage', put in this directory)
+
 To use:
 
-  1) Make sure the 'retro' binary is in your path
-  2) Put a copy of the retroImage in the top-level directory
-  3) Run ./libtool.sh to get a list of options
+  1) Run ./libtool.sh to get a list of options
+
+To use the PHP-based builder:
+
+  1) Create a file named "extensions"
+  2) Put the name of each extension you want, minus the .retro
+     file extension, in the "extensions" file
+  3) Each name should be separated by whitespace
+  4) Run "php build.php"
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Examples:
 
