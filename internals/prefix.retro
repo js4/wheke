@@ -12,6 +12,7 @@
 (   ` - Invoke the word as if it were a macro word            )
 (   ~ - Compile the address of a word [or leave it on the     )
 (       stack if interpreting]                                )
+(   ' - Get the value of the following char.                  )
 (                                                             )
 ( This code requires the 'find' word to be loaded prior to    )
 ( running.                                                    )
@@ -31,6 +32,7 @@
     char: ! code @ =if ! ;then
     char: ` code @ =if execute ;then
     char: ~ code @ =if .data ;then
+    char: ' code @ =if tib 1+ @ ;then
     class @ with-class
   ;
 ---reveal---
