@@ -26,23 +26,27 @@
   variable code
   variable class
   : char: 32 accept tib @ .data ; immediate
-  : handle
-    char: ' code @ =if tib 1+ @ ;then
-    char: " code @ =if tib 1+ keepString ;then
-    dup d->class @ class ! d->xt @
-    char: @ code @ =if @ ;then
-    char: ! code @ =if ! ;then
-    char: ` code @ =if execute ;then
-    char: ~ code @ =if .data ;then
-    class @ with-class
+  : clear 0 code ! ;
+  : always
+    char: ' code @ =if tib 1+ @ clear ;then
+    char: " code @ =if tib 1+ keepString clear ;then
+  ;
+  : if-word
+    code @ 0; drop
+    tib 1+ find if
+      which @ dup d->class @ class ! d->xt @
+      char: @ code @ =if @ clear ;then
+      char: ! code @ =if ! clear ;then
+      char: ` code @ =if execute clear ;then
+      char: ~ code @ =if .data clear ;then
+      class @ with-class
+    then
   ;
   : otherwise
-    drop
-    char: ' code @ =if tib 1+ @ ;then
-    char: " code @ =if tib 1+ keepString ;then
+    code @ 0; drop
     ." Not Found" cr
   ;
 ---reveal---
-  : prefix tib @ code ! tib 1+ find if handle ;then otherwise ;
+  : prefix tib @ code ! always if-word otherwise ;
 }}
 ' prefix is notfound
