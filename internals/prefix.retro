@@ -26,20 +26,34 @@
   variable code
   variable class
   : clear 0 code ! ;
-  : cond: ` char: ` code ` @ ` =if ; compile-only
-  : ;cond ` clear ` ;then ; compile-only
+  
+  variable start
+  : begin 0 start ! ; compile-only
+  : match start @ if
+      ` clear ` ;then
+    then start on 
+    ` char: ` code ` @ ` =if 
+  ; compile-only 
+  : end start off
+    ` clear ` ;then 
+  ; compile-only 
+
   : always
-    cond: ' tib 1+ @ ;cond
-    cond: " tib 1+ keepString ;cond
+    begin
+      match ' tib 1+ @ 	
+      match " tib 1+ keepString 
+    end
   ;
   : if-word
     code @ 0; drop
     tib 1+ find if
       which @ dup d->class @ class ! d->xt @
-      cond: @  @       ;cond
-      cond: !  !       ;cond
-      cond: `  execute ;cond
-      cond: ~  .data   ;cond
+      begin
+        match @  @       
+        match !  !       
+        match `  execute 
+        match ~  .data   
+      end
       class @ with-class
     then
   ;
