@@ -1,11 +1,16 @@
-( Escape Sequence Demo )
+( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
+( Escape Sequence Demo                                        )
+( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
+( Copyright [c] 2009, Luke Parrish                            )
+( License: ISC                                                )
+( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
   variable already
   variable code
   : clear 0 code ! ;
   : begin already off ; compile-only
   : end   ` clear ` ;then ; compile-only
   : prep  ` char: ` code ` @ ` = ; compile-only
-  : match already @ if ` end then 
+  : match already @ if ` end then
     already on ` prep ` if ; compile-only
 
   : stubs for stub next ;
@@ -33,16 +38,15 @@
   here ] rows ++ ; is up
   here ] cols -- ; is left
   here ] cols ++ ; is right
-  
+
   here ] tib on ; is quit
-  here ] 27 accept 
-         tib keepString 
+  here ] 27 accept
+         tib keepString
          dup getLength
          pos swap copy
          ; is input
-  
-  : pos rows @ (line) cols @ + ;
-  
-  : show-cursor pos @ char: * pos ! (v) pos ! ;
-  ' show-cursor is v  
 
+  : pos rows @ (line) cols @ + ;
+
+  : show-cursor pos @ char: * pos ! (v) pos ! ;
+  ' show-cursor is v
