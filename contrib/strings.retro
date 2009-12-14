@@ -17,9 +17,9 @@
 : append ( $$-$ ) swap prepend ;
 
 : split ( $c-$$ )
-  tib ! 
-  here swap 
-  dup getLength dup 
+  tib !
+  here swap
+  dup getLength dup
   for 2dup r - +
       @ dup tib @
       =if drop
