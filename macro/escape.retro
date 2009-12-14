@@ -1,0 +1,48 @@
+( Escape Sequence Demo )
+  variable already
+  variable code
+  : clear 0 code ! ;
+  : begin already off ; compile-only
+  : end   ` clear ` ;then ; compile-only
+  : prep  ` char: ` code ` @ ` = ; compile-only
+  : match already @ if ` end then 
+    already on ` prep ` if ; compile-only
+
+  : stubs for stub next ;
+  6 stubs up down left right
+          input quit
+
+  : scan key code !
+    begin
+      match h left
+      match l right
+      match j down
+      match k up
+      match q quit
+      match i input
+    end ;
+  : action repeat scan v tib @ if ;then again ;
+  : esc-scan dup 27 =if drop 32 action ;then ;
+  ' esc-scan is (remap-keys)
+
+  variable rows
+  variable cols
+  : pos rows @ (line) cols @ + ;
+
+  here ] rows -- ; is down
+  here ] rows ++ ; is up
+  here ] cols -- ; is left
+  here ] cols ++ ; is right
+  
+  here ] tib on ; is quit
+  here ] 27 accept 
+         tib keepString 
+         dup getLength
+         pos swap copy
+         ; is input
+  
+  : pos rows @ (line) cols @ + ;
+  
+  : show-cursor pos @ char: * pos ! (v) pos ! ;
+  ' show-cursor is v  
+
