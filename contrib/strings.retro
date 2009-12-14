@@ -5,11 +5,13 @@
 ( License: ISC                                                )
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 
-: append ( $$-$ )
-  swap
-  here push
-  here over getLength dup allot copy
-  here over getLength dup allot copy
-  0 , pop ;
+: prepend ( $$-$ )
+  here -rot
+  2 for
+    dup here swap
+    getLength dup
+    allot copy
+  next
+  0 , ;
 
-: prepend ( $$-$ ) swap append ;
+: append ( $$-$ ) swap prepend ;
