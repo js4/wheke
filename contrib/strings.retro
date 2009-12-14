@@ -15,3 +15,15 @@
   0 , ;
 
 : append ( $$-$ ) swap prepend ;
+
+: split ( $c-$$ )
+  tib ! 
+  here swap 
+  dup getLength dup 
+  for 2dup r - +
+      @ dup tib @
+      =if drop
+        here 1+ -rot
+      0 then ,
+  next
+  0 , 2drop ;
