@@ -12,7 +12,7 @@
 
 
 : .primitive ( a- )
-  dup @ 0 =if compiler @ -1 =if 2 + @ , ;; then then .word ;
+  dup @ 0 =if compiler @ -1 =if 2 + @ , ;then then .word ;
 
 ( Helper to make it easier to change class )
 : p: ( "- ) ' drop ['] .primitive which @ d->class ! ;
@@ -31,10 +31,12 @@ forget p:
 ( Extend ; and ;; to eliminate tail calls                     )
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 {
+  : opt-then ` then 0 , ;
   : call? here 1- 1- @ 7 ;
   : call->jump 8 here 1- 1- ! ;
   : opt-;; ( - ) call? =if call->jump ;; then 9 , ;
   : opt-;  ( - ) call? =if call->jump ` [ ;; then 9 , ` [ ;
+  ' opt-then is then
   ' opt-;  is ;
   ' opt-;; is ;;
 }
