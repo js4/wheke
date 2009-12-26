@@ -28,21 +28,12 @@
   next
   0 , 2drop ;
 
-( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
-( For loop with an index that counts from zero, placed on the )
-( top of the stack with each iteration. Uses NORS to keep     )
-( track of the original value, so nexti must be used to clean )
-( up when loop is complete.                                   )
-( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
-: fori ` dup ` push ` for ` pop ` pop ` 2dup 
-       ` push ` push ` swap ` - ; compile-only
-: nexti ` next ` pop ` drop ; compile-only
 
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 ( Convert counted and zero-terminated strings.                )
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 {{
-create buffer 64 allot 
+create buffer 64 allot
 ---reveal---
 : cs ( $-an ) tempString dup getLength ;
 : zt ( an-$ ) tuck buffer swap copy 0 swap buffer + ! buffer tempString ;
@@ -56,7 +47,7 @@ create buffer 64 allot
 : sav ( n-n ) ` dup ` push ;
 ---reveal---
 : csprepend ( anan-an )
-  here sav swap sav dup allot copy 
+  here sav swap sav dup allot copy
   here swap sav dup allot copy
   pop pop + pop swap ;
 : csappend ( anan-an ) push -rot pop -rot prepend ;
