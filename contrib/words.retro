@@ -1,0 +1,12 @@
+( Extend 'words' to show number of defined words            )
+( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
+( Copyright [c] 2009, Charles Childers                      )
+( License: ISC                                              )
+( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
+
+{
+  variable n
+  : w ( - )
+    0 n ! last repeat @ 0; dup d->name type 32 emit n ++ again ;
+  here is words ] w cr n @ . cr ;
+}
