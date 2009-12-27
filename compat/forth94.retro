@@ -78,10 +78,10 @@ here is stub ] create ['] .unsupported reclass ;
                               variable latest
 ( 6.1.0450 :         )        here is : ] create last @ latest ! latest @ @ last ! ] ;
 ( 6.1.0460 ;         )        here is ; ] latest @ last ! ['] ;; execute ['] [ execute ['] .word reclass ;; [
-( 6.1.0480 <         )        : < <if -1 ;; then 0 ;
+( 6.1.0480 <         )        ( Supported by RETRO )
 ( 6.1.0490 <#        )        : <# 0 hld ! ;
-( 6.1.0530 =         )        : = =if -1 ;; then 0 ;
-( 6.1.0540 >         )        : > >if -1 ;; then 0 ;
+( 6.1.0530 =         )        ( Supported by RETRO )
+( 6.1.0540 >         )        ( Supported by RETRO )
 ( 6.1.0550 >BODY     )        : >BODY ;
 ( 6.1.0560 >IN       )        ( --- )
                               stub >IN
@@ -232,7 +232,7 @@ here is stub ] create ['] .unsupported reclass ;
 ( 6.2 CORE EXT                                              )
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 ( 6.2.0060 #TIB          )  obs: #TIB
-( 6.2.0200 .(            )  stub .(
+( 6.2.0200 .(            )  : .( char: ) accept tib type ; IMMEDIATE
 ( 6.2.0210 .R            )  stub .R
 ( 6.2.0260 0<>           )  : 0<> 0 <> ;
 ( 6.2.0280 0>            )  : 0>  0 >  ;
@@ -240,7 +240,7 @@ here is stub ] create ['] .unsupported reclass ;
 ( 6.2.0410 2R>           )  stub 2R>
 ( 6.2.0415 2R@           )  stub 2R@
 ( 6.2.0455 :NONAME       )  : :NONAME here ] ;
-( 6.2.0500 <>            )  : <> !if TRUE ;then FALSE ;
+( 6.2.0500 <>            )  ( Supported by Retro )
 ( 6.2.0620 ?DO           )  stub ?DO
 ( 6.2.0700 AGAIN         )  stub AGAIN
 ( 6.2.0855 C"            )  stub C"
@@ -284,10 +284,10 @@ here is stub ] create ['] .unsupported reclass ;
 ( 6.2.2350 U>            )  stub U>
 ( 6.2.2395 UNUSED        )  : UNUSED #mem @ here - ;
 ( 6.2.2405 VALUE         )  {{
-                              : .value compiler @ -1 =if literal, ` @ ;then @ ;
+                              : .value compiler @ if literal, ` @ ;then @ ;
                             ---reveal---
                               : VALUE create 0 , ['] .value last @ d->class ! 0 , ;
                             }}
-( 6.2.2440 WITHIN        )  : WITHIN push over < pop swap push < pop + -2 = ;
+( 6.2.2440 WITHIN        )  : WITHIN within ;
 ( 6.2.2530 [COMPILE]     )  : [COMPILE] ' literal, ['] execute compile ; IMMEDIATE
 ( 6.2.2535 \             )  : \ whitespace off 10 accept whitespace on ; IMMEDIATE
