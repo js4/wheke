@@ -119,7 +119,7 @@ here is stub ] create ['] .unsupported reclass ;
                               : heap ['] here 3 + @ ;
 ( 6.1.0710 ALLOT     )        : ALLOT heap @ + heap ! ;
 ( 6.1.0720 AND       )        : AND and ;
-( 6.1.0750 BASE      )        create BASE 10 ,
+( 6.1.0750 BASE      )        : BASE base ;
 ( 6.1.0760 BEGIN     )        : BEGIN ` repeat ; IMMEDIATE
 ( 6.1.0770 BL        )        : BL 32 ;
 ( 6.1.0850 C!        )        : C! ! ;
