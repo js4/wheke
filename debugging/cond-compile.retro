@@ -8,6 +8,7 @@
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 {{
   : .noop drop ;
+  stub err
 
   : off
     ['] .noop ['] .word     :is
@@ -15,6 +16,8 @@
     ['] .noop ['] .data     :is
     ['] .noop ['] .compiler :is
     ['] .noop ['] .inline   :is
+    ['] err   ['] notfound  :is
+    ['] err   ['] ok        :is
   ;
 
   : on
@@ -23,8 +26,10 @@
     ['] .data     :devector
     ['] .compiler :devector
     ['] .class    :devector
+    ['] notfound  :devector
+    ['] ok        :devector
   ;
 ---reveal---
-  : [IF] 0; drop off ; ' execute last @ d->class !
-  : [THEN] on ; ' execute last @ d->class !
+  : [IF] not 0; drop off ;  ' execute reclass
+  : [THEN] on ;             ' execute reclass
 }}
