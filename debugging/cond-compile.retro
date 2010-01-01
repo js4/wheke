@@ -15,7 +15,7 @@
     ['] .noop ['] .macro    :is
     ['] .noop ['] .data     :is
     ['] .noop ['] .compiler :is
-    ['] .noop ['] .inline   :is
+    ['] .noop ['] .primitive :is
     ['] err   ['] notfound  :is
     ['] err   ['] ok        :is
   ;
@@ -25,7 +25,7 @@
     ['] .macro    :devector
     ['] .data     :devector
     ['] .compiler :devector
-    ['] .class    :devector
+    ['] .primitive :devector
     ['] notfound  :devector
     ['] ok        :devector
   ;
