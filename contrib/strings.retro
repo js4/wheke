@@ -52,3 +52,9 @@ create buffer 64 allot
   pop pop + pop swap ;
 : csappend ( anan-an ) push -rot pop -rot prepend ;
 }}
+
+
+( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
+( Get input into a string                                     )
+( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
+: accept$ ( $c- ) push repeat ekey dup r =if pop 2drop 0 swap ! ;then swap !+ again ;
