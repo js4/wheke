@@ -1,7 +1,6 @@
 ( Tools for memory management and ordered lists. )
 
 ( -allot allows some minimal garbage collection. )
-: allot heap +! ;
 : -allot heap -! ;
 
 ( sav is like "push r" )
