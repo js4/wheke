@@ -57,4 +57,5 @@ create buffer 64 allot
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 ( Get input into a string                                     )
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
-: accept$ ( $c- ) push repeat ekey dup r =if pop 2drop 0 swap ! ;then swap !+ again ;
+: accept$ ( $c- )
+  push repeat ekey dup r =if pop 2drop 0 swap ! ;then swap !+ again ;
