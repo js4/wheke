@@ -26,17 +26,17 @@
   variable code
   variable class
   : clear 0 code ! ;
-  
+
   variable already
   : begin already off ; compile-only
   : end   ` clear ` ;then ; compile-only
   : prep  ` char: ` code ` @ ` = ; compile-only
-  : match already @ if ` end then 
+  : match already @ if ` end then
     already on ` prep ` if ; compile-only
 
   : always
     begin
-      match ' tib 1+ @ 	
+      match ' tib 1+ @
       match " tib 1+ keepString
     end
   ;
@@ -45,10 +45,10 @@
     tib 1+ find if
       which @ dup d->class @ class ! d->xt @
       begin
-        match @  @       
-        match !  !       
-        match `  execute 
-        match ~  .data   
+        match @  @
+        match !  !
+        match `  execute
+        match ~  .data
       end
       class @ with-class
     then
