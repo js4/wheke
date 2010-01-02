@@ -118,8 +118,7 @@ here is stub ] create ['] .unsupported reclass ;
 
 ( 6.1.0705 ALIGN     )        : ALIGN ;
 ( 6.1.0706 ALIGNED   )        : ALIGNED ;
-                              : heap ['] here 3 + @ ;
-( 6.1.0710 ALLOT     )        : ALLOT heap @ + heap ! ;
+( 6.1.0710 ALLOT     )        alias ALLOT allot
 ( 6.1.0720 AND       )        alias AND and
 ( 6.1.0750 BASE      )        : BASE base ;
 ( 6.1.0760 BEGIN     )        : BEGIN ` repeat ; IMMEDIATE
@@ -129,8 +128,8 @@ here is stub ] create ['] .unsupported reclass ;
 ( 6.1.0870 C@        )        alias C@ @
 ( 6.1.0880 CELL+     )        alias CELL+ 1+ ;
 ( 6.1.0890 CELLS     )        : CELLS ;
-( 6.1.0895 CHAR      )        : CHAR 32 accept tib @ ;
-( 6.1.0897 CHAR+     )        : CHAR+ 1+ ;
+( 6.1.0895 CHAR      )        alias CHAR char:
+( 6.1.0897 CHAR+     )        alias CHAR+ 1+
 ( 6.1.0898 CHARS     )        : CHARS ;
 ( 6.1.0950 CONSTANT  )        : CONSTANT create last @ d->xt ! ;
 ( 6.1.0980 COUNT     )        : COUNT dup @ swap 1+ swap ;
@@ -149,10 +148,13 @@ here is stub ] create ['] .unsupported reclass ;
 ( 6.1.1360 EVALUATE  )        ( --- )
 ( 6.1.1370 EXECUTE   )        alias EXECUTE execute
 ( 6.1.1380 EXIT      )        alias EXIT ;; IMMEDIATE
+                              {{
                               create dst 0 ,
                               create val 0 ,
                               : (fill) for val @ dst @ ! 1 dst +! next ;
+                              ---reveal---
 ( 6.1.1540 FILL      )        : FILL swap push val ! dst ! pop (fill) ;
+                              }}
 ( 6.1.1550 FIND      )        ( --- )
                               stub FIND
 ( 6.1.1561 FM/MOD    )        ( --- )
@@ -175,10 +177,13 @@ here is stub ] create ['] .unsupported reclass ;
 ( 6.1.1870 MAX      )         : MAX 2dup >if drop ;then nip ;
 ( 6.1.1880 MIN      )         : MIN 2dup >if drop ;then nip ;
 ( 6.1.1890 MOD      )         : MOD mod ;
+                              {{
                               create src 0 ,
                               create dst 0 ,
                               : (copy) for src @ @ dst @ ! 1 src +! 1 dst +! next ;
+                              ---reveal---
 ( 6.1.1900 MOVE     )         : MOVE push dst ! src ! pop (copy) ;
+                              }}
 ( 6.1.1910 NEGATE   )         alias NEGATE neg
 ( 6.1.1980 OR       )         alias OR or
 ( 6.1.1990 OVER     )         alias OVER over
@@ -222,14 +227,14 @@ here is stub ] create ['] .unsupported reclass ;
                               stub UNLOOP
 ( 6.1.2390 UNTIL    )         ( --- )
                               stub UNTIL
-( 6.1.2410 VARIABLE )         : VARIABLE create 0 , ;
+( 6.1.2410 VARIABLE )         alias VARIABLE variable
 ( 6.1.2430 WHILE    )         : WHILE -1 !if pop drop then ;
 ( 6.1.2450 WORD     )         ( --- )
                               stub WORD
 ( 6.1.2490 XOR      )         alias XOR xor
 ( 6.1.2500 [        )         ( Supported by RETRO )
 ( 6.1.2510 [']      )         ( Supported by RETRO )
-( 6.1.2520 [CHAR]   )         : [CHAR] CHAR literal, ; IMMEDIATE
+( 6.1.2520 [CHAR]   )         alias [CHAR] char: IMMEDIATE
 ( 6.1.2540 ]        )         ( Supported by RETRO )
 
 
