@@ -8,25 +8,13 @@
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 ( do ... until                                                )
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
-( Value n is taken from the stack and stored to a virtual     )
-( variable. When this number is equal to the TOS at the time  )
+( Value n is taken from the stack and stored to the address   )
+( stack. When this number is equal to the TOS at the time     )
 ( until is executed, the loop terminates.                     )
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 
-{{
-: skipped-nop ( - ) 8 , here 2 + ,  0 , ;
-: virtual-var ( R: -a C: - )
-  here dup 1-
-  dup literal, ;
----reveal---
-: do    ( R: nn-n  C:   -aa )
-  ` 2dup ` >if
-    skipped-nop
-    virtual-var ` !  ; compile-only
-: until ( R:  n-n  C: aa-   )
-    ` dup literal, ` @
-    ` > ` if swap 8 , 3 + ,
-    ` then ` drop
-  ` else ` 2drop ` then ; compile-only
-}}
-
+: do    ( R: n-  C:  -a )
+  ` 2dup ` >if ` push here ; compile-only
+: until ( R: n-  C: a-  )
+  ` dup ` r ` >if swap 8 , , ` then
+  ` pop ` 2drop ` else ` 2drop ` then ; compile-only
