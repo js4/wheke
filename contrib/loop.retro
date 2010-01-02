@@ -10,13 +10,13 @@
 ( Value n is taken from the stack and stored to a private     )
 ( variable. When this number is equal to the TOS at the time  )
 ( until is executed, the loop terminates.                     )
- 
+
 {{
 variable cond
-: ifagain if ` 8 ` , ` , then ;
 ---reveal---
 : do    ( R: n-  C:  -a ) ` cond ` ! here ; compile-only
-: until ( R:  -  C: a-  ) ` dup ` cond ` @ ` = ` not ` if swap 8 , , ` 
-then ; compile-only
+: until ( R:  -  C: a-  )
+  ` dup ` cond ` @
+  ` = ` not ` if swap 8 , ,
+  ` then ; compile-only
 }}
-
