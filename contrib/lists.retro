@@ -1,0 +1,30 @@
+( Tools for memory management and ordered lists. )
+
+( -allot allows some minimal garbage collection. )
+: allot heap +! ;
+: -allot heap -! ;
+
+( sav is like "push r" )
+: sav ` dup ` push ; immediate
+
+( n elements in an unallocated list. )
+: tempsave ( ?n- ) for here r 1- + ! next ;
+: tempload ( n-? ) for here r 1- + @ next ;
+
+( n elements on here, allot by n. )
+: keepsave ( ?n- ) sav tempsave pop allot ;
+: keepload ( n-? ) sav -allot pop tempload ;
+
+( n elements starting at address a. )
+: keep! ( ?n-a ) here push keepsave pop ;
+: keep@ ( n-?a ) keepload here ;
+
+( Reverse the entire stack. )
+: reverse ( ?n-? ) sav tempsave pop tempload ;
+: reverse-stack ( ?-? ) depth reverse ;
+
+( create a named list, allot. )
+: list ( ?n"- ) create dup , keepsave ;
+
+( look up list element )
+: access ( n"- ) ' + @ ;

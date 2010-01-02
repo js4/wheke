@@ -1,0 +1,22 @@
+( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
+( String Manipulation                                         )
+( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
+( Copyright [c] 2010, Luke Parrish                            )
+( License: CC0                                                )
+( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
+
+
+( do ... until                                                )
+( Value n is taken from the stack and stored to a private     )
+( variable. When this number is equal to the TOS at the time  )
+( until is executed, the loop terminates.                     )
+
+{{
+variable cond
+---reveal---
+: do    ( R: n-  C:  -a ) ` cond ` ! here ; compile-only
+: until ( R:  -  C: a-  )
+  ` dup ` cond ` @
+  ` = ` not ` if swap 8 , ,
+  ` then ; compile-only
+}}
