@@ -19,11 +19,14 @@
   here dup 1-
   dup literal, ;
 ---reveal---
-: do    ( R: n-  C:  -a )
-  skipped-nop
-  virtual-var ` ! ; compile-only
-: until ( R:  -  C: a-  )
-  ` dup literal, ` @
-  ` > ` if swap 8 , 3 + ,
-  ` then ` drop ; compile-only
+: do    ( R: nn-n  C:   -aa )
+  ` 2dup ` >if
+    skipped-nop
+    virtual-var ` !  ; compile-only
+: until ( R:  n-n  C: aa-   )
+    ` dup literal, ` @
+    ` > ` if swap 8 , 3 + ,
+    ` then ` drop
+  ` else ` 2drop ` then ; compile-only
 }}
+
