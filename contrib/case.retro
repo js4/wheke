@@ -4,8 +4,7 @@
 ( License: ISC                                              )
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 
-create <case> 0 ,
-: switch <case> ! ;
-
-: case:  ` dup <case> literal, ` @ ` =if ` drop ; compile-only
-: break  ` ;; ` then ; compile-only
+: switch ` push ; compile-only
+: case:  ` r ` =if ` pop ` drop ; compile-only
+: break  ` ;then ; compile-only
+: default: ` pop ` drop ; compile-only
