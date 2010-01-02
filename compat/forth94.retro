@@ -27,6 +27,9 @@
 (   -  Non-implemented functionality is stubbed out.        )
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 
+here
+: alias ( ""- ) create ' last @ d->xt ! ['] .word reclass ;
+
 : array for 0 , next ;
 create holdaddr 66 array
 create hld 0 ,
@@ -62,7 +65,7 @@ here is stub ] create ['] .unsupported reclass ;
 ( 6.1.0180 .         )        ( --- )
 ( 6.1.0190 ."        )        : ." ['] s" execute ['] type compile ; IMMEDIATE
 ( 6.1.0230 /         )        ( Supported by RETRO )
-( 6.1.0240 /MOD      )        : /MOD /mod ;
+( 6.1.0240 /MOD      )        alias /MOD /mod
 ( 6.1.0250 0<        )        : 0< 0 <if -1 ;; then 0 ;
 ( 6.1.0270 0=        )        : 0= 0 =if -1 ;; then 0 ;
 ( 6.1.0290 1+        )        ( Supported by RETRO )
@@ -71,8 +74,8 @@ here is stub ] create ['] .unsupported reclass ;
 ( 6.1.0320 2*        )        : 2* 1 << ;
 ( 6.1.0330 2/        )        : 2/ dup 1  >> swap -1 >> not and or ;
 ( 6.1.0350 2@        )        : 2@ dup 1+ @ swap @ ;
-( 6.1.0370 2DROP     )        : 2DROP 2drop ;
-( 6.1.0380 2DUP      )        : 2DUP 2dup ;
+( 6.1.0370 2DROP     )        alias 2DROP 2drop
+( 6.1.0380 2DUP      )        alias 2DUP 2dup
 ( 6.1.0400 2OVER     )        : 2OVER push push 2dup pop -rot pop -rot ;
 ( 6.1.0430 2SWAP     )        : 2SWAP rot push rot pop ;
                               variable latest
@@ -87,12 +90,11 @@ here is stub ] create ['] .unsupported reclass ;
                               stub >IN
 ( 6.1.0570 >NUMBER   )        ( --- )
                               stub >NUMBER
-( 6.1.0580 >R        )        : >R 5 , ; IMMEDIATE
+( 6.1.0580 >R        )        alias >R push IMMEDIATE
 ( 6.1.0630 ?DUP      )        : ?DUP dup 0; ;
 ( 6.1.0650 @         )        ( Supported by RETRO )
-                              : drop-stack depth 0; for drop next ;
-( 6.1.0670 ABORT     )        : ABORT  drop-stack 0 execute ;
-( 6.1.0680 ABORT"    )        : ABORT" 0 literal, ['] !if execute ['] ." execute ['] ABORT compile ['] then execute ; IMMEDIATE
+( 6.1.0670 ABORT     )        : ABORT  reset [ 8 , 0 , ] ;
+( 6.1.0680 ABORT"    )        : ABORT" ` 0 ` !if ` ." ` ABORT ` then ; IMMEDIATE
 ( 6.1.0690 ABS       )        : ABS dup 0 <if -1 * then ;
 ( 6.1.0695 ACCEPT    )
 {{
@@ -118,35 +120,35 @@ here is stub ] create ['] .unsupported reclass ;
 ( 6.1.0706 ALIGNED   )        : ALIGNED ;
                               : heap ['] here 3 + @ ;
 ( 6.1.0710 ALLOT     )        : ALLOT heap @ + heap ! ;
-( 6.1.0720 AND       )        : AND and ;
+( 6.1.0720 AND       )        alias AND and
 ( 6.1.0750 BASE      )        : BASE base ;
 ( 6.1.0760 BEGIN     )        : BEGIN ` repeat ; IMMEDIATE
 ( 6.1.0770 BL        )        : BL 32 ;
-( 6.1.0850 C!        )        : C! ! ;
-( 6.1.0860 C,        )        : C, , ;
-( 6.1.0870 C@        )        : C@ @ ;
-( 6.1.0880 CELL+     )        : CELL+ 1+ ;
+( 6.1.0850 C!        )        alias C! !
+( 6.1.0860 C,        )        alias C, ,
+( 6.1.0870 C@        )        alias C@ @
+( 6.1.0880 CELL+     )        alias CELL+ 1+ ;
 ( 6.1.0890 CELLS     )        : CELLS ;
 ( 6.1.0895 CHAR      )        : CHAR 32 accept tib @ ;
 ( 6.1.0897 CHAR+     )        : CHAR+ 1+ ;
 ( 6.1.0898 CHARS     )        : CHARS ;
 ( 6.1.0950 CONSTANT  )        : CONSTANT create last @ d->xt ! ;
 ( 6.1.0980 COUNT     )        : COUNT dup @ swap 1+ swap ;
-( 6.1.0990 CR        )        : CR cr ;
-( 6.1.1000 CREATE    )        : CREATE create ;
+( 6.1.0990 CR        )        alias CR cr
+( 6.1.1000 CREATE    )        alias CREATE create
 ( 6.1.1170 DECIMAL   )        : DECIMAL 10 BASE ! ;
-( 6.1.1200 DEPTH     )        : DEPTH depth ;
+( 6.1.1200 DEPTH     )        alias DEPTH depth
 ( 6.1.1240 DO        )        ( --- )
                               stub DO
-( 6.1.1250 DOES>     )        : DOES> ` does> ; IMMEDIATE
-( 6.1.1260 DROP      )        : DROP drop ;
-( 6.1.1290 DUP       )        : DUP dup ;
-( 6.1.1310 ELSE      )        : ELSE ` else ; IMMEDIATE
-( 6.1.1320 EMIT      )        : EMIT emit ;
+( 6.1.1250 DOES>     )        alias DOES> does> IMMEDIATE
+( 6.1.1260 DROP      )        alias DROP drop
+( 6.1.1290 DUP       )        alias DUP dup
+( 6.1.1310 ELSE      )        alias ELSE else IMMEDIATE
+( 6.1.1320 EMIT      )        alias EMIT emit
 ( 6.1.1345 ENVIRONMENT? )     : ENVIRONMENT? 2drop 0 ;
 ( 6.1.1360 EVALUATE  )        ( --- )
-( 6.1.1370 EXECUTE   )        : EXECUTE push ;
-( 6.1.1380 EXIT      )        : EXIT 9 , ; IMMEDIATE
+( 6.1.1370 EXECUTE   )        alias EXECUTE execute
+( 6.1.1380 EXIT      )        alias EXIT ;; IMMEDIATE
                               create dst 0 ,
                               create val 0 ,
                               : (fill) for val @ dst @ ! 1 dst +! next ;
@@ -155,21 +157,21 @@ here is stub ] create ['] .unsupported reclass ;
                               stub FIND
 ( 6.1.1561 FM/MOD    )        ( --- )
                               stub FM/MOD
-( 6.1.1650 HERE      )        : HERE here ;
+( 6.1.1650 HERE      )        alias HERE here
 ( 6.1.1670 HOLD      )        : HOLD 1 hld +! holdaddr hld @ - ! ;
-( 6.1.1680 I         )        : I ` r ; IMMEDIATE
-( 6.1.1700 IF        )        : IF ` if ; IMMEDIATE
-( 6.1.1720 INVERT   )         : INVERT not ;
+( 6.1.1680 I         )        alias I r IMMEDIATE
+( 6.1.1700 IF        )        alias IF if IMMEDIATE
+( 6.1.1720 INVERT   )         alias INVERT not
 ( 6.1.1730 J        )         ( --- )
                               stub J
-( 6.1.1750 KEY      )         : KEY key ;
+( 6.1.1750 KEY      )         alias KEY key
 ( 6.1.1760 LEAVE    )         ( --- )
                               stub LEAVE
-( 6.1.1780 LITERAL  )         : LITERAL literal, ;
+( 6.1.1780 LITERAL  )         alias LITERAL literal, IMMEDIATE
 ( 6.1.1800 LOOP     )         ( --- )
                               stub LOOP
-( 6.1.1805 LSHIFT   )         : LSHIFT << ;
-( 6.1.1810 M*       )         : M* * ;
+( 6.1.1805 LSHIFT   )         alias LSHIFT <<
+( 6.1.1810 M*       )         alias M* *
 ( 6.1.1870 MAX      )         : MAX 2dup >if drop ;then nip ;
 ( 6.1.1880 MIN      )         : MIN 2dup >if drop ;then nip ;
 ( 6.1.1890 MOD      )         : MOD mod ;
@@ -177,20 +179,23 @@ here is stub ] create ['] .unsupported reclass ;
                               create dst 0 ,
                               : (copy) for src @ @ dst @ ! 1 src +! 1 dst +! next ;
 ( 6.1.1900 MOVE     )         : MOVE push dst ! src ! pop (copy) ;
-( 6.1.1910 NEGATE   )         : NEGATE neg ;
-( 6.1.1980 OR       )         : OR or ;
-( 6.1.1990 OVER     )         : OVER over ;
-                              : (to-entry) last repeat @ 0; 2dup d->xt @ =if nip ;then again ;
-                              : >entry (to-entry) drop ;
-                              : ?immediate d->class @ dup ['] .macro =if -1 drop ;then 1 =if -1 ;then 0 ;
+( 6.1.1910 NEGATE   )         alias NEGATE neg
+( 6.1.1980 OR       )         alias OR or
+( 6.1.1990 OVER     )         alias OVER over
+                              {{
+                                : (to-entry) last repeat @ 0; 2dup d->xt @ =if nip ;then again ;
+                                : >entry (to-entry) drop ;
+                                : ?immediate d->class @ dup ['] .macro =if -1 drop ;then 1 =if -1 ;then 0 ;
+                              ---reveal---
 ( 6.1.2033 POSTPONE )         : POSTPONE ' dup literal, >entry ?immediate -1 =if ['] execute compile ;then ['] compile compile ; IMMEDIATE
+                              }}
 ( 6.1.2050 QUIT     )         : QUIT 0 execute ;
-( 6.1.2060 R>       )         : R> ` pop ; IMMEDIATE
-( 6.1.2070 R@       )         : R@ ` r ; IMMEDIATE
+( 6.1.2060 R>       )         alias R> pop IMMEDIATE
+( 6.1.2070 R@       )         alias R@ r IMMEDIATE
 ( 6.1.2120 RECURSE  )         : RECURSE 7 , last @ d->xt @ , ; IMMEDIATE
-( 6.1.2140 REPEAT   )         : REPEAT ` again ; IMMEDIATE
-( 6.1.2160 ROT      )         : ROT rot ;
-( 6.1.2162 RSHIFT   )         : RSHIFT >> ;
+( 6.1.2140 REPEAT   )         alias REPEAT again IMMEDIATE
+( 6.1.2160 ROT      )         alias ROT rot
+( 6.1.2162 RSHIFT   )         alias RSHIFT >>
 ( 6.1.2165 S"       )         : S" ` s" ` dup ` getLength ; IMMEDIATE
 ( 6.1.2170 S>D      )         ( --- )
                               stub S>D
@@ -202,8 +207,8 @@ here is stub ] create ['] .unsupported reclass ;
 ( 6.1.2220 SPACE    )         : SPACE BL emit ;
 ( 6.1.2230 SPACES   )         : SPACES repeat 0; SPACE 1- again ;
 ( 6.1.2250 STATE    )         : STATE compiler ;
-( 6.1.2260 SWAP     )         : SWAP swap ;
-( 6.1.2270 THEN     )         : THEN ` then ; IMMEDIATE
+( 6.1.2260 SWAP     )         alias SWAP swap
+( 6.1.2270 THEN     )         alias THEN then IMMEDIATE
 ( 6.1.2310 TYPE     )         : TYPE for dup @ . 1+ next drop ;
 ( 6.1.2320 U.       )         ( --- )
                               stub U.
@@ -221,7 +226,7 @@ here is stub ] create ['] .unsupported reclass ;
 ( 6.1.2430 WHILE    )         : WHILE -1 !if pop drop then ;
 ( 6.1.2450 WORD     )         ( --- )
                               stub WORD
-( 6.1.2490 XOR      )         : XOR xor ;
+( 6.1.2490 XOR      )         alias XOR xor
 ( 6.1.2500 [        )         ( Supported by RETRO )
 ( 6.1.2510 [']      )         ( Supported by RETRO )
 ( 6.1.2520 [CHAR]   )         : [CHAR] CHAR literal, ; IMMEDIATE
@@ -252,9 +257,9 @@ here is stub ] create ['] .unsupported reclass ;
 ( 6.2.1350 ERASE         )  : ERASE 0 swap fill ;
 ( 6.2.1390 EXPECT        )  obs: EXPECT
 ( 6.2.1485 FALSE         )  ( Supported by Retro )
-( 6.2.1660 HEX           )  : HEX hex ;
+( 6.2.1660 HEX           )  alias HEX hex
 ( 6.2.1850 MARKER        )  stub MARKER
-( 6.2.1930 NIP           )  : NIP nip ;
+( 6.2.1930 NIP           )  alias NIP nip
 ( 6.2.1950 OF            )  stub OF
 ( 6.2.2000 PAD           )  : PAD here 1024 + ;
 ( 6.2.2008 PARSE         )  stub PARSE
@@ -270,7 +275,7 @@ here is stub ] create ['] .unsupported reclass ;
                                ;
                             }}
 ( 6.2.2040 QUERY         )  obs: QUERY
-( 6.2.2125 REFILL        )  : REFILL FALSE ;
+( 6.2.2125 REFILL        )  alias REFILL FALSE
 ( 6.2.2148 RESTORE-INPUT )  stub RESTORE-INPUT
 ( 6.2.2150 ROLL          )  stub ROLL
 ( 6.2.2182 SAVE-INPUT    )  stub SAVE-INPUT
@@ -288,6 +293,7 @@ here is stub ] create ['] .unsupported reclass ;
                             ---reveal---
                               : VALUE create 0 , ['] .value last @ d->class ! 0 , ;
                             }}
-( 6.2.2440 WITHIN        )  : WITHIN within ;
+( 6.2.2440 WITHIN        )  alias WITHIN within
 ( 6.2.2530 [COMPILE]     )  : [COMPILE] ' literal, ['] execute compile ; IMMEDIATE
 ( 6.2.2535 \             )  : \ whitespace off 10 accept whitespace on ; IMMEDIATE
+here swap - .
