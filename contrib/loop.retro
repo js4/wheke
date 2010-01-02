@@ -1,22 +1,32 @@
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
-( String Manipulation                                         )
+( Looping Constructs                                          )
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 ( Copyright [c] 2010, Luke Parrish                            )
 ( License: CC0                                                )
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 
-
+( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 ( do ... until                                                )
-( Value n is taken from the stack and stored to a private     )
+( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
+( Value n is taken from the stack and stored to a virtual     )
 ( variable. When this number is equal to the TOS at the time  )
 ( until is executed, the loop terminates.                     )
+( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 
 {{
-variable cond
+: skipped-nop ( - ) 8 , here 2 + ,  0 , ;
+: virtual-var ( R: -a C: - )
+  here dup 1-
+  dup literal, ;
 ---reveal---
-: do    ( R: n-  C:  -a ) ` cond ` ! here ; compile-only
-: until ( R:  -  C: a-  )
-  ` dup ` cond ` @
-  ` = ` not ` if swap 8 , ,
-  ` then ; compile-only
+: do    ( R: nn-n  C:   -aa )
+  ` 2dup ` >if
+    skipped-nop
+    virtual-var ` !  ; compile-only
+: until ( R:  n-n  C: aa-   )
+    ` dup literal, ` @
+    ` > ` if swap 8 , 3 + ,
+    ` then ` drop
+  ` else ` 2drop ` then ; compile-only
 }}
+
