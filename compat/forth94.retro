@@ -1,7 +1,7 @@
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 ( 1994 ANS FORTH                                            )
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
-( Copyright [c] 2009, Charles Childers                      )
+( Copyright [c] 2009, 2010, Charles Childers                )
 ( License: ISC                                              )
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 ( This is an attempt to provide a large subset of the 1994  )
@@ -277,7 +277,7 @@ here is stub ] create ['] .unsupported reclass ;
 ( 6.2.2218 SOURCE-ID     )  stub SOURCE-ID
 ( 6.2.2240 SPAN          )  obs: SPAN
 ( 6.2.2290 TIB           )  obs: TIB
-( 6.2.2295 TO            )  : TO ' compiler @ -1 =if literal, ` ! ;then ! ; IMMEDIATE
+( 6.2.2295 TO            )  : TO ' .data ` ! ; IMMEDIATE
 ( 6.2.2298 TRUE          )  ( Supported by Retro )
 ( 6.2.2300 TUCK          )  : TUCK tuck ;
 ( 6.2.2330 U.R           )  stub U.R
