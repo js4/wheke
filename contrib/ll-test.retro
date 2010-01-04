@@ -18,12 +18,12 @@
 : test.failing cr tests-run @ . ;
 : test.expect= tests-run ++ !if test.failing ." test.expect= failed" ;; then ." ." tests-passed ++ ;
 : test.expect! tests-run ++ =if test.failing ." test.expect! failed" ;; then ." ." tests-passed ++ ;
-ll.var lltest
-ll.var lltest1
-ll.var lltest2
-ll.var lltest3
-ll.var lltest4
-ll.var lltest5
+variable lltest
+variable lltest1
+variable lltest2
+variable lltest3
+variable lltest4
+variable lltest5
 : tests
 -999
 dup -999                         test.expect=

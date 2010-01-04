@@ -7,8 +7,6 @@
 (     : preallocate 1000 for ll.new next 1000 for ll.free next ;      )
 ( see ll-test.retro for usage samples.                                )
 
-: ll.var 0 variable: ;
-ll.var ll.free.list
 : ll.make   ( --L ) here 2 allot ;
 : ll.data   ( L--a ) 1+ ;
 ( since the 0th field is ll.next, A @ @ @ @ is the 4th element of A   )
@@ -20,6 +18,7 @@ ll.var ll.free.list
   ( remove and return from list stored at A first linked list cell L)
   dup push @ dup ( ll.next) @ pop ! ;
 
+0 variable: ll.free.list
 : ll.new    ( --L )
   ( get a new linked list cell from freelist, or make one)
   ll.free.list dup @ 0 !if llv.pop ;; then drop ll.make ;
