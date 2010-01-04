@@ -41,4 +41,6 @@
   : then [prior ` then prior] depth? ; compile-only
 
   : ; ` ;; ` [ end ;; [ compile-only
+
+  here is save ] [ 1 @ literal, ] 1 ! 1 4 out wait ;
 }}
