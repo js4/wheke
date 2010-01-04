@@ -1,34 +1,48 @@
-( linked list words for retro.  I put this code in the public domain. )
+( Words for creating and using linked lists                   )
+(                                                             )
+( Jay Skeer, 2010                                             )
+( Luke Parrish, 2010                                          )
+( Charles Childers, 2010       
+( License: ISC                                                )
 
-( !!!WARNING!!! This allocates memory in the dictionary, so if you    )
-( have to allocate a new linked list cell while compiling a word, bad )
-( things will happen.  Either change ll.make, or allocate enough cells)
-( and put them on the free list before you need them.                 )
-(     : preallocate 1000 for ll.new next 1000 for ll.free next ;      )
-( see ll-test.retro for usage samples.                                )
+( !!!WARNING!!! As with any code that allocates memory in the )
+( dictionary, if you try to allocate a new linked list cell   )
+( while compiling a word, bad things will happen.  Either     )
+( change ll.make, or allocate enough cells and put them on    )
+( the free list before you need them:                         )
 
-: ll.make   ( --L ) here 2 allot ;
-: ll.data   ( L--a ) 1+ ;
-( since the 0th field is ll.next, A @ @ @ @ is the 4th element of A   )
+( : preallocate 1000 for ll.new next 1000 for ll.free next ;  )
 
-: llv.push  ( La-- )
-  ( add linked list cell L to list stored at A)
-  dup push @ over ( ll.next) ! pop ! ;
-: llv.pop   ( a--L )
-  ( remove and return from list stored at A first linked list cell L)
-  dup push @ dup ( ll.next) @ pop ! ;
+( see ll-test.retro for usage samples.                        )
+
+: ll.make   (  -L ) here 2 allot ;
+: ll.data   ( L-a ) 1+ ;
+
+( Field 0 holds ll.next, so "a @ @ @ @" is the 4th element.   )
+
+( llv.push -- add linked list cell "l" to list stored at "a"  )
+: llv.push  ( la- )
+  dup push @ over ( ll.next ) ! pop ! ;
+
+( llv.pop -- remove and return first linked list cell l       )
+: llv.pop   ( a-l )
+  dup push @ dup ( ll.next ) @ pop ! ;
 
 0 variable: ll:freelist
-: ll.new    ( --L )
-  ( get a new linked list cell from freelist, or make one)
+
+( ll.new -- create a new linked list cell                     )
+(           use freelist if available.                        )
+: ll.new    ( -l )
   ll:freelist dup @ 0 !if llv.pop ;; then drop ll.make ;
-: ll.free   ( L-- )
+
+: ll.free   ( l-  )
   ( add L to the free list)
   ll:freelist llv.push ;
 
-: llv.!+    ( xa-- )
-  ( Add X to the front of the linked list stored at A)
+( llv.!+ -- Add data to the front of the linked list.         )
+: llv.!+    ( xa- )
+
   dup push @ ll.new dup pop ! !+ ! ;
-: llv.@-    ( a--x )
-  ( Remove and return from linked list stored at A the first data X)
+( llv.@- -- Remove/return the first data from linked list.    )
+: llv.@-    ( a-x )
   llv.pop dup ll.data @ swap ll.free ;
