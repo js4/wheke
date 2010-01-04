@@ -218,9 +218,10 @@ lltest llv.@- 1                          test.expect=
 lltest @ 0                               test.expect=
 swap dup -999 test.expect= swap dup -888 test.expect=
 
-cr
-." ran " tests-run @ . ." tests.  "
-." passed " tests-passed @ . ." tests."
+cr cr tests-run @ tests-passed @
+=if ." OK " else ." !!!FAIL!!! " then
+." passed " tests-passed @ . ." tests of "
+               tests-run @ . ." trials."
 cr
 ; tests
 
