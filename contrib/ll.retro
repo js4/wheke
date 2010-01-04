@@ -1,8 +1,8 @@
 ( Words for creating and using linked lists                   )
 (                                                             )
-( Jay Skeer, 2010                                             )
-( Luke Parrish, 2010                                          )
-( Charles Childers, 2010                                      )  
+( Copyright 2010, Jay Skeer                                   )
+( Copyright 2010, Luke Parrish                                )
+( Copyright 2010, Charles Childers                            )
 ( License: ISC                                                )
 
 ( !!!WARNING!!! As with any code that allocates memory in the )
