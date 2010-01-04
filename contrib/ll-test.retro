@@ -1,9 +1,11 @@
 ( requires ll.retro, Test the words for in ll.retro           )
 (                                                             )
-( Jay Skeer, 2010                                             )
-( Luke Parrish, 2010                                          )
-( Charles Childers, 2010                                      )  
+( Copyright 2010, Jay Skeer                                   )
+( Copyright 2010, Luke Parrish                                )
+( Copyright 2010, Charles Childers                            )
 ( License: ISC                                                )
+
+ifNotDefined ll.new { bye }
 
 ( search for >>> to see some interesting ways to use ll       )
 
@@ -218,13 +220,14 @@ lltest llv.@- 1                          test.expect=
 lltest @ 0                               test.expect=
 swap dup -999 test.expect= swap dup -888 test.expect=
 
+( remember the warning about allocating lists in the )
+( dictionary?  That's why I have ... )
+0 ll:freelist !
+
 cr cr tests-run @ tests-passed @
 =if ." OK " else ." !!!FAIL!!! " then
 ." passed " tests-passed @ . ." tests of "
                tests-run @ . ." trials."
 cr
 ; tests
-
-( remember the warning about allocating lists in the )
-( dictionary?  That's why I have ... )
-forget test 0 ll:freelist !
+forget test ( to get rid of the safe words: forget z; )
