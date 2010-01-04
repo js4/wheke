@@ -2,7 +2,7 @@
 (                                                             )
 ( Jay Skeer, 2010                                             )
 ( Luke Parrish, 2010                                          )
-( Charles Childers, 2010       
+( Charles Childers, 2010                                      )  
 ( License: ISC                                                )
 
 ( !!!WARNING!!! As with any code that allocates memory in the )
@@ -13,36 +13,33 @@
 
 ( : preallocate 1000 for ll.new next 1000 for ll.free next ;  )
 
-( see ll-test.retro for usage samples.                        )
+( note:                                                       )
+(   see ll-test.retro for usage samples.                      )
+(   "l" is a kind of "a", the address of a linked list cell.  )
 
-: ll.make   (  -L ) here 2 allot ;
-: ll.data   ( L-a ) 1+ ;
-
-( Field 0 holds ll.next, so "a @ @ @ @" is the 4th element.   )
+: ll.make   (  -l ) here 2 allot ;
+: ll.data   ( l-a ) 1+ ;
+( Field 0 holds ll.next so "a @ @ @" is the 3rd element of a. )
+( "a @ @ @" is also a "variable holding the list starting at  )
+(                      the 4th element of a.  See ll-test."   )
 
 ( llv.push -- add linked list cell "l" to list stored at "a"  )
-: llv.push  ( la- )
-  dup push @ over ( ll.next ) ! pop ! ;
+: llv.push  ( la- )  dup push @ over ( ll.next ) ! pop ! ;
 
-( llv.pop -- remove and return first linked list cell l       )
-: llv.pop   ( a-l )
-  dup push @ dup ( ll.next ) @ pop ! ;
+( llv.pop -- remove from "a" and return first "l"             )
+: llv.pop   ( a-l )  dup push @ dup ( ll.next ) @ pop ! ;
 
 0 variable: ll:freelist
 
-( ll.new -- create a new linked list cell                     )
-(           use freelist if available.                        )
+( ll.new -- get a new linked list cell from heap or freelist  )
 : ll.new    ( -l )
   ll:freelist dup @ 0 !if llv.pop ;; then drop ll.make ;
 
-: ll.free   ( l-  )
-  ( add L to the free list)
-  ll:freelist llv.push ;
+( ll.free -- add l to the freelist                            )
+: ll.free   ( l-  )  ll:freelist llv.push ;
 
 ( llv.!+ -- Add data to the front of the linked list.         )
-: llv.!+    ( xa- )
+: llv.!+    ( xa- )  dup push @ ll.new dup pop ! !+ ! ;
 
-  dup push @ ll.new dup pop ! !+ ! ;
 ( llv.@- -- Remove/return the first data from linked list.    )
-: llv.@-    ( a-x )
-  llv.pop dup ll.data @ swap ll.free ;
+: llv.@-    ( a-x )  llv.pop dup ll.data @ swap ll.free ;
