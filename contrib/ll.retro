@@ -18,13 +18,13 @@
   ( remove and return from list stored at A first linked list cell L)
   dup push @ dup ( ll.next) @ pop ! ;
 
-0 variable: ll.free.list
+0 variable: ll:freelist
 : ll.new    ( --L )
   ( get a new linked list cell from freelist, or make one)
-  ll.free.list dup @ 0 !if llv.pop ;; then drop ll.make ;
+  ll:freelist dup @ 0 !if llv.pop ;; then drop ll.make ;
 : ll.free   ( L-- )
   ( add L to the free list)
-  ll.free.list llv.push ;
+  ll:freelist llv.push ;
 
 : llv.!+    ( xa-- )
   ( Add X to the front of the linked list stored at A)
