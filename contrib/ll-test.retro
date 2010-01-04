@@ -1,0 +1,125 @@
+( requires ll.retro )
+
+( safe versions of some of the words, you probably don't want these.)
+: z; ( 0; but never drop TOS) dup 0 =if     pop drop then ;
+: znip; ( xy-xy | 0)          dup 0 =if nip pop drop then ;
+: ll.next ( L--a ) ( 0 + ) ; ( this is a no-op, only here for documentation.)
+( since the 0th field is pointer to next, A @ @ @ @ is the 4th element of A)
+: llv.pops  ( a--L )
+  ( remove and return from list stored at A first linked list cell L)
+  ( pops is safe, if a is 0 or stores 0, return 0)
+  z; dup @ znip; swap push dup ( ll.next) @ pop ! ;
+
+( automated tests.  They remove themselves from the vocabulary when they finish.)
+: test ;
+: ++ 1 swap +! ;
+0 variable: tests-run
+0 variable: tests-passed
+: test.failing cr tests-run @ . ;
+: test.expect= tests-run ++ !if test.failing ." test.expect= failed" ;; then ." ." tests-passed ++ ;
+: test.expect! tests-run ++ =if test.failing ." test.expect! failed" ;; then ." ." tests-passed ++ ;
+ll.var lltest
+ll.var lltest1
+ll.var lltest2
+ll.var lltest3
+ll.var lltest4
+ll.var lltest5
+: tests
+-999
+dup -999                         test.expect=
+lltest 0                         test.expect!
+lltest @ 0                       test.expect=
+ll.make dup 0                    test.expect!
+dup lltest1 ! lltest llv.push
+dup -999                         test.expect=
+lltest @ 0                       test.expect!
+lltest @ ll.next @ 0             test.expect=
+lltest @ lltest1 @               test.expect=
+ll.make dup 0                    test.expect!
+dup lltest2 ! lltest llv.push
+dup -999                         test.expect=
+lltest @ 0                       test.expect!
+lltest @ ll.next @ lltest1 @     test.expect=
+lltest @ lltest2 @               test.expect=
+lltest llv.pop lltest3 !
+dup -999                         test.expect=
+lltest @ 0                       test.expect!
+lltest @ ll.next @ 0             test.expect=
+lltest @ lltest1 @               test.expect=
+lltest2 @ lltest3 @              test.expect=
+0 llv.pops 0                     test.expect=
+lltest4 llv.pops 0               test.expect=
+lltest2 @ lltest llv.push
+dup -999                         test.expect=
+lltest llv.pops lltest4 !
+lltest4 @ lltest2 @              test.expect=
+lltest @ lltest1 @               test.expect=
+ll.free.list @ 0                 test.expect=
+ll.new lltest5 !
+lltest5 @ 0                      test.expect!
+lltest5 @ ll.free
+dup -999                         test.expect=
+ll.free.list @ lltest5 @         test.expect=
+lltest5 @ ll.next @ 0            test.expect=
+lltest4 @ ll.free
+dup -999                         test.expect=
+ll.free.list @ lltest4 @         test.expect=
+lltest4 @ ll.next @ lltest5 @    test.expect=
+lltest5 @ ll.next @ 0            test.expect=
+lltest @ lltest1 @               test.expect=
+lltest llv.pop ll.free
+dup -999                         test.expect=
+lltest @ 0                       test.expect=
+ll.free.list @ lltest1 @         test.expect=
+lltest1 @ ll.next @ lltest4 @    test.expect=
+lltest4 @ ll.next @ lltest5 @    test.expect=
+lltest5 @ ll.next @ 0            test.expect=
+dup -999                         test.expect=
+ll.new lltest llv.push
+dup -999                         test.expect=
+ll.new lltest llv.push
+dup -999                         test.expect=
+lltest  @ lltest4 @              test.expect=
+lltest4 @ ll.next @ lltest1 @    test.expect=
+lltest1 @ ll.next @ 0            test.expect=
+ll.free.list @ lltest5 @         test.expect=
+dup -999                         test.expect=
+ll.new lltest llv.push
+dup -999                         test.expect=
+lltest  @ lltest5 @              test.expect=
+lltest5 @ ll.next @ lltest4 @    test.expect=
+lltest4 @ ll.next @ lltest1 @    test.expect=
+lltest1 @ ll.next @ 0            test.expect=
+ll.free.list @ 0                 test.expect=
+dup -999                         test.expect=
+lltest llv.pop ll.free
+lltest llv.pop ll.free
+lltest llv.pop ll.free
+dup -999                         test.expect=
+lltest @ 0                       test.expect=
+ll.free.list @ lltest1 @         test.expect=
+1 lltest llv.!+
+2 lltest llv.!+
+3 lltest llv.!+
+4 lltest llv.!+
+5 lltest llv.!+
+6 lltest llv.!+
+dup -999                         test.expect=
+lltest llv.@- 6                  test.expect=
+lltest llv.@- 5                  test.expect=
+lltest llv.@- 4                  test.expect=
+lltest llv.@- 3                  test.expect=
+lltest llv.@- 2                  test.expect=
+lltest llv.@- 1                  test.expect=
+lltest @ 0                       test.expect=
+dup -999                         test.expect=
+
+cr
+." ran " tests-run @ . ." tests.  "
+." passed " tests-passed @ . ." tests."
+cr
+; tests
+forget test
+( remember the warning about allocating lists in the )
+( dictionary?  That's I have ... )
+0 ll.free.list !

@@ -1,0 +1,35 @@
+( linked list words for retro.  I put this code in the public domain. )
+
+( !!!WARNING!!! This allocates memory in the dictionary, so if you    )
+( have to allocate a new linked list cell while compiling a word, bad )
+( things will happen.  Either change ll.make, or allocate enough cells)
+( and put them on the free list before you need them.                 )
+(     : preallocate 1000 for ll.new next 1000 for ll.free next ;      )
+( see ll-test.retro for usage samples.                                )
+
+: ll.var 0 variable: ;
+ll.var ll.free.list
+: ll.make   ( --L ) here 2 allot ;
+: ll.data   ( L--a ) 1+ ;
+( since the 0th field is ll.next, A @ @ @ @ is the 4th element of A   )
+
+: llv.push  ( La-- )
+  ( add linked list cell L to list stored at A)
+  dup push @ over ( ll.next) ! pop ! ;
+: llv.pop   ( a--L )
+  ( remove and return from list stored at A first linked list cell L)
+  dup push @ dup ( ll.next) @ pop ! ;
+
+: ll.new    ( --L )
+  ( get a new linked list cell from freelist, or make one)
+  ll.free.list dup @ 0 !if llv.pop ;; then drop ll.make ;
+: ll.free   ( L-- )
+  ( add L to the free list)
+  ll.free.list llv.push ;
+
+: llv.!+    ( xa-- )
+  ( Add X to the front of the linked list stored at A)
+  dup push @ ll.new dup pop ! !+ ! ;
+: llv.@-    ( a--x )
+  ( Remove and return from linked list stored at A the first data X)
+  llv.pop dup ll.data @ swap ll.free ;
