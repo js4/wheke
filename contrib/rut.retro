@@ -1,0 +1,95 @@
+( Small assistance in writing Retro Unit Tests                )
+(                                                             )
+( Copyright 2010, Jay Skeer                                   )
+( Copyright 2010, Luke Parrish                                )
+( Copyright 2010, Charles Childers                            )
+( License: ISC                                                )
+
+stub rut ( marker for forget )
+0 variable: rut:trials
+0 variable: rut:passed
+0 variable: rut:suite
+{{
+: ++ 1 swap +! ;
+stub rut.first.test
+' rut.first.test rut:suite !
+
+: rut.failed ( $- ) cr ." Test: " type ."  FAILED!" ;
+
+: rut.passed ( $- ) drop ." ." rut:passed ++ ;
+
+: rut.expect rut:trials ++ swap push swap pop ;
+
+: (rut.x=) ( xy$- )
+  rut.expect !if rut.failed ;; then rut.passed ;
+
+: (rut.x!) ( xy$- )
+  rut.expect =if rut.failed ;; then rut.passed ;
+
+: rut.init 0 rut:trials ! 0 rut:passed ! ;
+
+: rut.summary
+    cr cr rut:passed @ rut:trials @
+    =if ." OK " else ." !!!FAIL!!! " then
+    ." passed " rut:passed @ . ." tests of "
+                rut:trials @ . ." trials."
+    cr ;
+
+: (rut.add)
+  rut:suite @ literal, ` execute
+  last @ d->xt @ rut:suite !     ; compile-only
+
+---reveal---
+
+( Test that x != y                                            )
+: rut.x! ( xy-- )
+  last @ d->name literal, ` (rut.x!) ; compile-only
+
+( Expect that x = y                                           )
+: rut.x= ( xy-- )
+  last @ d->name literal, ` (rut.x=) ; compile-only
+
+( Create a new unit test word, add it to the list to be run   )
+: rut: create ['] .word reclass ] ` (rut.add) ;
+
+( Run all the unit tests now and produce a summary of results )
+: rut.run rut.init rut:suite @ execute rut.summary ;
+
+}}
+
+( How to use this unit test tool set                          )
+(                                                             )
+( 1: copy rut.retro to a nice place                           )
+( 2: make stuff-test.retro with a buncha tests like           )
+(                                                             )
+(      rut: t.rut.x! 0 1 rut.x! ;                             )
+(      rut: t.rut.x= 0 0 rut.x= ;                             )
+(                                                             )
+(      rut.run    ( run all the tests                         )
+(      forget rut ( optionally, clean out the dictionary      )
+(                                                             )
+( 3: use it like                                              )
+(    bash 3.2 $ retro --with test-stuff.retro \               )
+(                     --with rut.retro        \               )
+(                     --with stuff.retro                      )
+(                                                             )
+(                                                             )
+( 4: hope for output like this                                )
+(                                                             )
+(     ok    rut.run ..                                        )
+(                                                             )
+(     OK passed 2 tests of 2 trials.                          )
+(                                                             )
+(     ok  forget rut                                          )
+(     ok                                                      )
+(                                                             )
+( 5: And if you do test first, like me, you'll see plenty of  )
+(    output like this:                                        )
+(                                                             )
+(     ok    rut.run .                                         )
+(     Test: t.rut.x= FAILED!                                  )
+(                                                             )
+(     !!!FAIL!!! passed 1 tests of 2 trials.                  )
+(                                                             )
+(     ok                                                      )
+(                                                             )
