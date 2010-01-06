@@ -1,0 +1,24 @@
+( Test the unit test code                                     )
+(                                                             )
+( Copyright 2010, Jay Skeer                                   )
+( Copyright 2010, Luke Parrish                                )
+( Copyright 2010, Charles Childers                            )
+( License: ISC                                                )
+
+( include rut.retro with --with, or just cut-n-paste          )
+ifNotDefined rut { bye }
+
+( write a buncha tests                                        )
+rut: t.rut.x! 0 1 rut.x! ;
+rut: t.rut.x= 0 0 rut.x= ;
+
+( how am I gonna test the test tools if I have no failing     )
+( tests???                                                    )
+rut: t.rut.x!fail 0 0 rut.x! ;
+rut: t.rut.x=fail 0 1 rut.x= ;
+
+( run them all                                                )
+rut.run
+
+( clean out the dictionary                                    )
+forget rut
