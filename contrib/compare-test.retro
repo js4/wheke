@@ -1,0 +1,109 @@
+( test the string compare words                               )
+(                                                             )
+( Copyright 2010, Jay Skeer                                   )
+( Copyright 2010, Luke Parrish                                )
+( Copyright 2010, Charles Childers                            )
+( License: ISC                                                )
+
+( include rut.retro with --with, or just cut-n-paste          )
+ifNotDefined rut { bye }
+
+: s1 s" foobarcowsofoobarcowsofoobarcowsofoobarcowso" ;
+: s2 s" foo" ;
+: s3 s" bar" ;
+: s4 s" b" ;
+: zl s"  " ;
+0 zl ! ( make zl be a zero length string )
+
+-999 -888
+rut: ts1 swap dup -999 rut.x= swap dup -888 rut.x= ;
+
+rut: s1=s1 s1 s1 comp 0 rut.x!  s1 s1 comp -1 rut.x= ;
+rut: s2=s2 s2 s2 comp 0 rut.x!  s2 s2 comp -1 rut.x= ;
+rut: s3=s3 s3 s3 comp 0 rut.x!  s3 s3 comp -1 rut.x= ;
+rut: s4=s4 s4 s4 comp 0 rut.x!  s4 s4 comp -1 rut.x= ;
+rut: zl=zl zl zl comp 0 rut.x!  zl zl comp -1 rut.x= ;
+
+rut: ts2 swap dup -999 rut.x= swap dup -888 rut.x= ;
+
+rut: s2!s1 s2 s1 comp 0 rut.x= ;
+rut: s3!s1 s3 s1 comp 0 rut.x= ;
+rut: s4!s1 s4 s1 comp 0 rut.x= ;
+rut: zl!s1 zl s1 comp 0 rut.x= ;
+
+rut: ts3 swap dup -999 rut.x= swap dup -888 rut.x= ;
+
+rut: s1!s2 s1 s2 comp 0 rut.x= ;
+rut: s3!s2 s3 s2 comp 0 rut.x= ;
+rut: s4!s2 s4 s2 comp 0 rut.x= ;
+rut: zl!s2 zl s2 comp 0 rut.x= ;
+
+rut: ts4 swap dup -999 rut.x= swap dup -888 rut.x= ;
+
+rut: s1!s3 s1 s3 comp 0 rut.x= ;
+rut: s2!s3 s2 s3 comp 0 rut.x= ;
+rut: s4!s3 s4 s3 comp 0 rut.x= ;
+rut: zl!s3 zl s3 comp 0 rut.x= ;
+
+rut: ts5 swap dup -999 rut.x= swap dup -888 rut.x= ;
+
+rut: s1!s4 s1 s4 comp 0 rut.x= ;
+rut: s2!s4 s2 s4 comp 0 rut.x= ;
+rut: s3!s4 s3 s4 comp 0 rut.x= ;
+rut: zl!s4 zl s4 comp 0 rut.x= ;
+
+rut: ts6 swap dup -999 rut.x= swap dup -888 rut.x= ;
+
+rut: s1!zl s1 zl comp 0 rut.x= ;
+rut: s2!zl s2 zl comp 0 rut.x= ;
+rut: s3!zl s3 zl comp 0 rut.x= ;
+rut: s4!zl s4 zl comp 0 rut.x= ;
+
+rut: ts7 swap dup -999 rut.x= swap dup -888 rut.x= ;
+
+rut: s1=s1a s1 s1 compa 0 rut.x! ;
+rut: s2=s2a s2 s2 compa 0 rut.x! ;
+rut: s3=s3a s3 s3 compa 0 rut.x! ;
+rut: s4=s4a s4 s4 compa 0 rut.x! ;
+rut: zl=zla zl zl compa 0 rut.x! ;
+
+rut: ts2a swap dup -999 rut.x= swap dup -888 rut.x= ;
+
+rut: s2!s1a s2 s1 compa 0 rut.x= ;
+rut: s3!s1a s3 s1 compa 0 rut.x= ;
+rut: s4!s1a s4 s1 compa 0 rut.x= ;
+rut: zl!s1a zl s1 compa 0 rut.x= ;
+
+rut: ts3a swap dup -999 rut.x= swap dup -888 rut.x= ;
+
+rut: s1!s2a s1 s2 compa 0 rut.x= ;
+rut: s3!s2a s3 s2 compa 0 rut.x= ;
+rut: s4!s2a s4 s2 compa 0 rut.x= ;
+rut: zl!s2a zl s2 compa 0 rut.x= ;
+
+rut: ts4a swap dup -999 rut.x= swap dup -888 rut.x= ;
+
+rut: s1!s3a s1 s3 compa 0 rut.x= ;
+rut: s2!s3a s2 s3 compa 0 rut.x= ;
+rut: s4!s3a s4 s3 compa 0 rut.x= ;
+rut: zl!s3a zl s3 compa 0 rut.x= ;
+
+rut: ts5a swap dup -999 rut.x= swap dup -888 rut.x= ;
+
+rut: s1!s4a s1 s4 compa 0 rut.x= ;
+rut: s2!s4a s2 s4 compa 0 rut.x= ;
+rut: s3!s4a s3 s4 compa 0 rut.x= ;
+rut: zl!s4a zl s4 compa 0 rut.x= ;
+
+rut: ts6a swap dup -999 rut.x= swap dup -888 rut.x= ;
+
+rut: s1!zla s1 zl compa 0 rut.x= ;
+rut: s2!zla s2 zl compa 0 rut.x= ;
+rut: s3!zla s3 zl compa 0 rut.x= ;
+rut: s4!zla s4 zl compa 0 rut.x= ;
+
+rut: ts7a swap dup -999 rut.x= swap dup -888 rut.x= ;
+
+cr cr cr
+rut.run
+

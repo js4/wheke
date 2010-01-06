@@ -1,0 +1,83 @@
+( various versions of string compare                          )
+(                                                             )
+( Copyright 2010, Jay Skeer                                   )
+( Copyright 2010, Luke Parrish                                )
+( Copyright 2010, Charles Childers                            )
+( License: ISC                                                )
+
+( string compare )
+: comp1 ( $$-a matching $$-0 not matching )
+  repeat
+    2dup
+      @ swap @ 2dup !if 2drop 2drop 0 ;; then
+      + 0 =if drop ;; then
+    1+ swap 1+
+  again
+;
+
+( expand the 2xxx calls and hand optimize                     )
+: comp2 ( $$-f )
+   repeat 
+     over @ over @
+     over !if drop drop dup xor ;; then
+     0 =if drop dup xor 1- ;; then
+     1+ swap 1+
+   again
+;
+
+( move the 1+ swap 1+ to the top of the loop                  )
+: comp3 ( $$-f)
+   repeat
+     push dup 1+ swap pop swap 
+     push dup 1+ swap @ dup pop @ swap
+     swap !if drop drop dup xor ;; then
+     0 =if drop dup xor 1- ;; then
+   again
+;
+( The second if is obviously making the again act like an     )
+( repeat until loop, so make a =until                         )
+
+( =until ) ( xy- ) ( return to the matching repeat if x != y  )
+(                   12 is the current opnum for !jump         )
+: =until 12 , , ; compile-only
+
+: comp4 ( $$-f)
+  repeat
+     dup @ push 1+ swap
+     dup @ push 1+ pop dup pop swap
+     !if drop drop dup xor ;; then
+  0 =until
+  drop dup xor 1-
+;
+
+: comp ( $$-f) ( comp4 with the repeat =until done by hand    )
+  [ here ]
+     dup @ push 1+ swap
+     dup @ push 1+ pop dup pop swap
+     !if drop drop dup xor ;; then
+  0 [ 12 , , ]
+  drop drop -1
+;
+
+( we can go just a tiny bit faster if returning any non-0     )
+( value is good enough currently this returns the address of  )
+( one of the 0's in the matching strings to indicate success  )
+( this saves 3 cells and 2 operations.                        )
+: comp4a ( $$-a equal strings | $$-0 unequal strings )
+  repeat
+     dup @ push 1+ swap
+     dup @ push 1+ pop dup pop swap
+     !if drop drop dup xor ;; then
+  0 =until
+  drop
+;
+
+( just comp4a with repeat =until compiled by hand             )
+: compa ( $$-a equal strings | $$-0 unequal strings )
+  [ here ]
+     dup @ push 1+ swap
+     dup @ push 1+ pop dup pop swap
+     !if drop drop dup xor ;; then
+  0 [ 12 , , ]
+  drop
+;
