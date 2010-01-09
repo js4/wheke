@@ -27,6 +27,8 @@
 (   -  Non-implemented functionality is stubbed out.        )
 ( ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ )
 
+vocab forth94 ((
+
 here
 : alias ( ""- ) create ' last @ d->xt ! ['] .word reclass ;
 
@@ -302,3 +304,6 @@ here is stub ] create ['] .unsupported reclass ;
 ( 6.2.2530 [COMPILE]     )  : [COMPILE] ' literal, ['] execute compile ; IMMEDIATE
 ( 6.2.2535 \             )  : \ whitespace off 10 accept whitespace on ; IMMEDIATE
 here swap - .
+
+))
+forth94 shut
