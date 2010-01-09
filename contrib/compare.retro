@@ -44,7 +44,7 @@
 : comp4 ( $$-f)
   repeat
      dup @ push 1+ swap
-     dup @ push 1+ pop dup pop swap
+     dup @ push 1+ pop dup pop
      !if drop drop dup xor ;; then
   0 =until
   drop dup xor 1-
@@ -53,7 +53,7 @@
 : comp ( $$-f) ( comp4 with the repeat =until done by hand    )
   [ here ]
      dup @ push 1+ swap
-     dup @ push 1+ pop dup pop swap
+     dup @ push 1+ pop dup pop
      !if drop drop dup xor ;; then
   0 [ 12 , , ]
   drop drop -1
@@ -66,7 +66,7 @@
 : comp4a ( $$-a equal strings | $$-0 unequal strings )
   repeat
      dup @ push 1+ swap
-     dup @ push 1+ pop dup pop swap
+     dup @ push 1+ pop dup pop
      !if drop drop dup xor ;; then
   0 =until
   drop
@@ -76,7 +76,7 @@
 : compa ( $$-a equal strings | $$-0 unequal strings )
   [ here ]
      dup @ push 1+ swap
-     dup @ push 1+ pop dup pop swap
+     dup @ push 1+ pop dup pop
      !if drop drop dup xor ;; then
   0 [ 12 , , ]
   drop
