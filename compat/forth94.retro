@@ -306,4 +306,4 @@ here is stub ] create ['] .unsupported reclass ;
 here swap - .
 
 ))
-forth94 shut
+forth94
