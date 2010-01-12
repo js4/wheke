@@ -5,13 +5,18 @@
 ( Copyright 2010, Charles Childers                            )
 ( License: ISC                                                )
 
-ifNotDefined ll.new { bye }
+ifNotDefined ll.new { cr ." require ll.retro" cr bye }
+ifNotDefined rut: { cr ." require rut.retro" cr bye }
 
 ( search for >>> to see some interesting ways to use ll       )
 
 ( safe versions of some of the words, you  don't want these.  )
-: z; ( 0; but never drop TOS) dup 0 =if     pop drop then ;
-: znip; ( xy-xy | 0)          dup 0 =if nip pop drop then ;
+stub ll.safe
+ifNotDefined z; {
+: z;     ( x-x | 0-0 return )
+  ` dup ` 0; ` drop ; compile-only }
+: znip; ( xy-xy | x0-0 return )
+  ` dup ` 0 ` =if ` nip ` ;; ` then ; compile-only
 
 : ll.next ( l-l ) ( 0 + ) ; ( this is a no-op, documentation. )
 ( since the 0th field is pointer to next, A @ @ @ @ is the    )
@@ -24,116 +29,121 @@ ifNotDefined ll.new { bye }
 ( Automated Tests. They remove themselves from the vocabulary )
 ( when they finish.                                           )
 stub test  ( marker for "forget"                              )
-: ++ 1 swap +! ;
+ifNotDefined ++ { : ++ 1 swap +! ; }
 0 variable: tests-run
 0 variable: tests-passed
-: test.failing cr tests-run @ . ;
-: test.expect= tests-run ++ !if test.failing
-  ." test.expect= failed" ;; then ." ." tests-passed ++ ;
-: test.expect! tests-run ++ =if test.failing
-  ." test.expect! failed" ;; then ." ." tests-passed ++ ;
 variable lltest
 variable lltest1
 variable lltest2
 variable lltest3
 variable lltest4
 variable lltest5
-: tests
--999 -888
-swap dup -999 test.expect= swap dup -888 test.expect=
-lltest 0                             test.expect!
-lltest @ 0                               test.expect=
-ll.make dup 0                        test.expect!
-dup lltest1 ! lltest llv.push
-swap dup -999 test.expect= swap dup -888 test.expect=
-lltest @ 0                           test.expect!
-lltest @ ll.next @ 0                     test.expect=
-lltest @ lltest1 @                       test.expect=
-ll.make dup 0                        test.expect!
-dup lltest2 ! lltest llv.push
-swap dup -999 test.expect= swap dup -888 test.expect=
-lltest @ 0                           test.expect!
-lltest @ ll.next @ lltest1 @             test.expect=
-lltest @ lltest2 @                       test.expect=
-lltest llv.pop lltest3 !
-swap dup -999 test.expect= swap dup -888 test.expect=
-lltest @ 0                           test.expect!
-lltest @ ll.next @ 0                     test.expect=
-lltest @ lltest1 @                       test.expect=
-lltest2 @ lltest3 @                      test.expect=
-0 llv.pops 0                             test.expect=
-lltest4 llv.pops 0                       test.expect=
-lltest2 @ lltest llv.push
-swap dup -999 test.expect= swap dup -888 test.expect=
-lltest llv.pops lltest4 !
-lltest4 @ lltest2 @                      test.expect=
-lltest @ lltest1 @                       test.expect=
-ll:freelist @ 0                          test.expect=
-ll.new lltest5 !
-lltest5 @ 0                          test.expect!
-lltest5 @ ll.free
-swap dup -999 test.expect= swap dup -888 test.expect=
-ll:freelist @ lltest5 @                  test.expect=
-lltest5 @ ll.next @ 0                    test.expect=
-lltest4 @ ll.free
-swap dup -999 test.expect= swap dup -888 test.expect=
-ll:freelist @ lltest4 @                  test.expect=
-lltest4 @ ll.next @ lltest5 @            test.expect=
-lltest5 @ ll.next @ 0                    test.expect=
-lltest @ lltest1 @                       test.expect=
-lltest llv.pop ll.free
-swap dup -999 test.expect= swap dup -888 test.expect=
-lltest @ 0                               test.expect=
-ll:freelist @ lltest1 @                  test.expect=
-lltest1 @ ll.next @ lltest4 @            test.expect=
-lltest4 @ ll.next @ lltest5 @            test.expect=
-lltest5 @ ll.next @ 0                    test.expect=
-swap dup -999 test.expect= swap dup -888 test.expect=
-ll.new lltest llv.push
-swap dup -999 test.expect= swap dup -888 test.expect=
-ll.new lltest llv.push
-swap dup -999 test.expect= swap dup -888 test.expect=
-lltest  @ lltest4 @                      test.expect=
-lltest4 @ ll.next @ lltest1 @            test.expect=
-lltest1 @ ll.next @ 0                    test.expect=
-ll:freelist @ lltest5 @                  test.expect=
-swap dup -999 test.expect= swap dup -888 test.expect=
-ll.new lltest llv.push
-swap dup -999 test.expect= swap dup -888 test.expect=
-lltest  @ lltest5 @                      test.expect=
-lltest5 @ ll.next @ lltest4 @            test.expect=
-lltest4 @ ll.next @ lltest1 @            test.expect=
-lltest1 @ ll.next @ 0                    test.expect=
-ll:freelist @ 0                          test.expect=
-swap dup -999 test.expect= swap dup -888 test.expect=
-lltest llv.pop ll.free
-lltest llv.pop ll.free
-lltest llv.pop ll.free
-swap dup -999 test.expect= swap dup -888 test.expect=
-lltest @ 0                               test.expect=
-ll:freelist @ lltest1 @                  test.expect=
-1 lltest llv.!+
-2 lltest llv.!+
-3 lltest llv.!+
-4 lltest llv.!+
-5 lltest llv.!+
-6 lltest llv.!+
-swap dup -999 test.expect= swap dup -888 test.expect=
-lltest llv.@- 6                          test.expect=
-lltest llv.@- 5                          test.expect=
-lltest llv.@- 4                          test.expect=
-lltest llv.@- 3                          test.expect=
-lltest llv.@- 2                          test.expect=
-lltest llv.@- 1                          test.expect=
-lltest @ 0                               test.expect=
-swap dup -999 test.expect= swap dup -888 test.expect=
-1 lltest llv.!+
-2 lltest llv.!+
-3 lltest llv.!+
-4 lltest llv.!+
-5 lltest llv.!+
-6 lltest llv.!+
-swap dup -999 test.expect= swap dup -888 test.expect=
+-999 -888 ( so we can check for stack leaks and smashes )
+
+: test-no-stack-leak ( - ; look to see if stack is unchanged )
+  swap dup -999 rut.x= swap dup -888 rut.x= ;
+
+rut: tll.basics
+  test-no-stack-leak
+  lltest 0                             rut.x!
+  lltest @ 0                               rut.x=
+  ll.make dup 0                        rut.x!
+  dup lltest1 ! lltest llv.push
+  test-no-stack-leak
+  lltest @ 0                           rut.x!
+  lltest @ ll.next @ 0                     rut.x=
+  lltest @ lltest1 @                       rut.x=
+  ll.make dup 0                        rut.x!
+  dup lltest2 ! lltest llv.push
+  test-no-stack-leak
+  lltest @ 0                           rut.x!
+  lltest @ ll.next @ lltest1 @             rut.x=
+  lltest @ lltest2 @                       rut.x=
+  lltest llv.pop lltest3 !
+  test-no-stack-leak
+  lltest @ 0                           rut.x!
+  lltest @ ll.next @ 0                     rut.x=
+  lltest @ lltest1 @                       rut.x=
+  lltest2 @ lltest3 @                      rut.x=
+  0 llv.pops 0                             rut.x=
+  lltest4 llv.pops 0                       rut.x=
+  lltest2 @ lltest llv.push
+  test-no-stack-leak
+  lltest llv.pops lltest4 !
+  lltest4 @ lltest2 @                      rut.x=
+  lltest @ lltest1 @                       rut.x=
+  ll:freelist @ 0                          rut.x=
+  ll.new lltest5 !
+  lltest5 @ 0                          rut.x!
+  lltest5 @ ll.free
+  test-no-stack-leak
+  ll:freelist @ lltest5 @                  rut.x=
+  lltest5 @ ll.next @ 0                    rut.x=
+  lltest4 @ ll.free
+  test-no-stack-leak
+  ll:freelist @ lltest4 @                  rut.x=
+  lltest4 @ ll.next @ lltest5 @            rut.x=
+  lltest5 @ ll.next @ 0                    rut.x=
+  lltest @ lltest1 @                       rut.x=
+  lltest llv.pop ll.free
+  test-no-stack-leak
+  lltest @ 0                               rut.x=
+  ll:freelist @ lltest1 @                  rut.x=
+  lltest1 @ ll.next @ lltest4 @            rut.x=
+  lltest4 @ ll.next @ lltest5 @            rut.x=
+  lltest5 @ ll.next @ 0                    rut.x=
+  test-no-stack-leak
+  ll.new lltest llv.push
+  test-no-stack-leak
+  ll.new lltest llv.push
+  test-no-stack-leak
+  lltest  @ lltest4 @                      rut.x=
+  lltest4 @ ll.next @ lltest1 @            rut.x=
+  lltest1 @ ll.next @ 0                    rut.x=
+  ll:freelist @ lltest5 @                  rut.x=
+  test-no-stack-leak
+  ll.new lltest llv.push
+  test-no-stack-leak
+  lltest  @ lltest5 @                      rut.x=
+  lltest5 @ ll.next @ lltest4 @            rut.x=
+  lltest4 @ ll.next @ lltest1 @            rut.x=
+  lltest1 @ ll.next @ 0                    rut.x=
+  ll:freelist @ 0                          rut.x=
+  test-no-stack-leak
+  lltest llv.pop ll.free
+  lltest llv.pop ll.free
+  lltest llv.pop ll.free
+  test-no-stack-leak ;
+
+rut: t-basic!+@-
+  test-no-stack-leak
+  lltest @ 0                               rut.x=
+  ll:freelist @ lltest1 @                  rut.x=
+  1 lltest llv.!+
+  2 lltest llv.!+
+  3 lltest llv.!+
+  4 lltest llv.!+
+  5 lltest llv.!+
+  6 lltest llv.!+
+  test-no-stack-leak
+  lltest llv.@- 6                          rut.x=
+  lltest llv.@- 5                          rut.x=
+  lltest llv.@- 4                          rut.x=
+  lltest llv.@- 3                          rut.x=
+  lltest llv.@- 2                          rut.x=
+  lltest llv.@- 1                          rut.x=
+  lltest @ 0                               rut.x=
+  test-no-stack-leak ;
+
+rut: t-del-middle
+  test-no-stack-leak
+  1 lltest llv.!+
+  2 lltest llv.!+
+  3 lltest llv.!+
+  4 lltest llv.!+
+  5 lltest llv.!+
+  6 lltest llv.!+
+  test-no-stack-leak
 
             ( >>> how to delete from the middle of a list <<< )
             (     remember from ll.retro...                   )
@@ -145,89 +155,94 @@ swap dup -999 test.expect= swap dup -888 test.expect=
 ( lltest @ ll.next @ ll.next @ llv.pop ll.free                )
   lltest @         @         @ llv.pop ll.free
 
-swap dup -999 test.expect= swap dup -888 test.expect=
-lltest llv.@- 6                          test.expect=
-lltest llv.@- 5                          test.expect=
-lltest llv.@- 4                          test.expect=
-lltest llv.@- 2                          test.expect=
-lltest llv.@- 1                          test.expect=
-lltest @ 0                               test.expect=
-swap dup -999 test.expect= swap dup -888 test.expect=
-1 lltest llv.!+
-2 lltest llv.!+
-3 lltest llv.!+
-4 lltest llv.!+
-5 lltest llv.!+
-6 lltest llv.!+
-swap dup -999 test.expect= swap dup -888 test.expect=
+  test-no-stack-leak
+  lltest llv.@- 6                          rut.x=
+  lltest llv.@- 5                          rut.x=
+  lltest llv.@- 4                          rut.x=
+  lltest llv.@- 2                          rut.x=
+  lltest llv.@- 1                          rut.x=
+  lltest @ 0                               rut.x=
+  test-no-stack-leak
+
+  test-no-stack-leak
+  1 lltest llv.!+
+  2 lltest llv.!+
+  3 lltest llv.!+
+  4 lltest llv.!+
+  5 lltest llv.!+
+  6 lltest llv.!+
+  test-no-stack-leak
 
             ( >>> how to delete from the middle of a list <<< )
             ( this removes the SIXTH, last element, storing 1 )
-lltest @ @ @ @ @ llv.@- drop
+  lltest @ @ @ @ @ llv.@- drop
             ( "llv.pop ll.free" is more efficient since it    )
             ( doesn't have to work to return the data there.  )
 
-swap dup -999 test.expect= swap dup -888 test.expect=
-lltest llv.@- 6                          test.expect=
-lltest llv.@- 5                          test.expect=
-lltest llv.@- 4                          test.expect=
-lltest llv.@- 3                          test.expect=
-lltest llv.@- 2                          test.expect=
-lltest @ 0                               test.expect=
-swap dup -999 test.expect= swap dup -888 test.expect=
-1 lltest llv.!+
-2 lltest llv.!+
-3 lltest llv.!+
-5 lltest llv.!+
-6 lltest llv.!+
-swap dup -999 test.expect= swap dup -888 test.expect=
+  test-no-stack-leak
+  lltest llv.@- 6                          rut.x=
+  lltest llv.@- 5                          rut.x=
+  lltest llv.@- 4                          rut.x=
+  lltest llv.@- 3                          rut.x=
+  lltest llv.@- 2                          rut.x=
+  lltest @ 0                               rut.x=
+  test-no-stack-leak ;
+
+rut: t-add-middle
+  test-no-stack-leak
+  1 lltest llv.!+
+  2 lltest llv.!+
+  3 lltest llv.!+
+  5 lltest llv.!+
+  6 lltest llv.!+
+  test-no-stack-leak
 
             ( >>> how to INSERT into the middle of a list <<< )
             ( this inserts 99 before the THIRD element        )
-99 lltest @ @ llv.!+
+  99 lltest @ @ llv.!+
 
-swap dup -999 test.expect= swap dup -888 test.expect=
-lltest llv.@- 6                          test.expect=
-lltest llv.@- 5                          test.expect=
-lltest llv.@- 99                         test.expect=
-lltest llv.@- 3                          test.expect=
-lltest llv.@- 2                          test.expect=
-lltest llv.@- 1                          test.expect=
-lltest @ 0                               test.expect=
-swap dup -999 test.expect= swap dup -888 test.expect=
-1 lltest llv.!+
-2 lltest llv.!+
-3 lltest llv.!+
-4 lltest llv.!+
-5 lltest llv.!+
-6 lltest llv.!+
-swap dup -999 test.expect= swap dup -888 test.expect=
+  test-no-stack-leak
+  lltest llv.@- 6                          rut.x=
+  lltest llv.@- 5                          rut.x=
+  lltest llv.@- 99                         rut.x=
+  lltest llv.@- 3                          rut.x=
+  lltest llv.@- 2                          rut.x=
+  lltest llv.@- 1                          rut.x=
+  lltest @ 0                               rut.x=
+  test-no-stack-leak ;
+
+rut: t-change-middle
+  test-no-stack-leak
+  1 lltest llv.!+
+  2 lltest llv.!+
+  3 lltest llv.!+
+  4 lltest llv.!+
+  5 lltest llv.!+
+  6 lltest llv.!+
+  test-no-stack-leak
 
             ( >>> how to CHANGE the middle of a list <<<      )
             ( >>> this replaces 5 with 99                     )
-lltest @ ll.next @ ll.data @ 5   test.expect=  ( read 5 first )
-99 lltest @ ll.next @ ll.data !                ( write 99     )
-lltest @ ll.next @ ll.data @ 99  test.expect=  ( read 99 now  )
-lltest @         @    1+   @ 99  test.expect=  ( same code    )
+  lltest @ ll.next @ ll.data @ 5   rut.x=  ( read 5 first )
+  99 lltest @ ll.next @ ll.data !          ( write 99     )
+  lltest @ ll.next @ ll.data @ 99  rut.x=  ( read 99 now  )
+  lltest @         @    1+   @ 99  rut.x=  ( same code    )
 
-swap dup -999 test.expect= swap dup -888 test.expect=
-lltest llv.@- 6                          test.expect=
-lltest llv.@- 99                         test.expect=
-lltest llv.@- 4                          test.expect=
-lltest llv.@- 3                          test.expect=
-lltest llv.@- 2                          test.expect=
-lltest llv.@- 1                          test.expect=
-lltest @ 0                               test.expect=
-swap dup -999 test.expect= swap dup -888 test.expect=
+  test-no-stack-leak
+  lltest llv.@- 6                          rut.x=
+  lltest llv.@- 99                         rut.x=
+  lltest llv.@- 4                          rut.x=
+  lltest llv.@- 3                          rut.x=
+  lltest llv.@- 2                          rut.x=
+  lltest llv.@- 1                          rut.x=
+  lltest @ 0                               rut.x=
+  test-no-stack-leak
+;
+
+rut.run
 
 ( remember the warning about allocating lists in the )
-( dictionary?  That's why I have ... )
+( dictionary?  That's why I have this before forget  )
 0 ll:freelist !
 
-cr cr tests-run @ tests-passed @
-=if ." OK " else ." !!!FAIL!!! " then
-." passed " tests-passed @ . ." tests of "
-               tests-run @ . ." trials."
-cr
-; tests
-forget test ( to get rid of the safe words: forget z; )
+forget test ( to get rid of the safe words: forget ll.safe )
